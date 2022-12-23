@@ -13,7 +13,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include <chrono>
+#include <ctime>
+#include <random>
+#include <functional>
 
 void OnResizeCallback(GLFWwindow*, int, int);
 void ProcessInput(GLFWwindow*);
@@ -40,46 +42,70 @@ int main() {
 	// 사용할 OpenGL 프로필(현재는 Core)을 GLFW에게 알려준다
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	
+	// 윈도우 생성
 	GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL Startup", nullptr, nullptr);
 	if (window == nullptr) {
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
-
+	// window의 컨텍스트를 주 컨텍스트로 지정
 	glfwMakeContextCurrent(window);
 
+	// GLAD: OpenGL용 함수 포인터 관리
+	// 컴파일 할 OS 환경에 따라 함수를 정의하는 glfwGetProcAddress 함수를 전달
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		std::cout << "Failed to intialize GLAD" << std::endl;
 		return -1;
 	}
 
 	glViewport(0, 0, 800, 600);
+	// 창 사이즈 변경 콜백
 	glfwSetFramebufferSizeCallback(window, OnResizeCallback);
 
-	while (!glfwWindowShouldClose(window)) {
+	std::mt19937 randomEngine{ static_cast<unsigned int>(time(0)) };
+	std::uniform_real_distribution<> distribution(0.0, 1.0);
+
+	double r = distribution(randomEngine);
+	double g = distribution(randomEngine);
+	double b = distribution(randomEngine);
+
+	// 메인 루프
+	while (!glfwWindowShouldClose(window)) { // 종료해야 하는지 확인
 		// 입력 처리
 		ProcessInput(window);
 		
-		// 렌더링
-		glClearColor(0.81f, 1.0f, 0.89f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		// 렌더링 처리
 
-		// 이벤트 확인하고 버퍼 교체
+		// glClear로 초기화할 버퍼 중 컬러 버퍼를 어떤 색으로 초기화할지 결정
+		// 색상만 정해서 glClear가 호출되기 전엔 아무 일도 일어나지 않는다.
+		glClearColor(r, g, b, 1.0f);
+		// glClearXXX로 설정한 값으로 버퍼를 비운다. (정확히는 덮어씌운다)
+		// GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT(깊이 버퍼), GL_STENCIL_BUFFER_BIT(스텐실 버퍼)가 있다.
+		glClear(GL_COLOR_BUFFER_BIT);
+		//glClear(GL_DEPTH_BUFFER_BIT);
+		//glClear(GL_STENCIL_BUFFER_BIT);
+
+		// 이벤트(키보드 입력이나 마우스 이동 등)가 발생했는지 확인 후 등록된 콜백 함수들을 호출
 		glfwPollEvents();
+		// 컬러 버퍼 교체 (더블버퍼링)
 		glfwSwapBuffers(window);
 	}
 
+	// 모든 리소스 해제
 	glfwTerminate();
 	return 0;
 }
 
+// 창 사이즈가 변경되면 호출
 void OnResizeCallback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
 void ProcessInput(GLFWwindow* window) {
+	// 키 입력 (DirectX랑 비슷한듯?)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		// 윈도우 종료 플래그 설정 (이 bool값은 메인 루프의 glfwWindowShouldClose(...)로 확인 가능) 
 		glfwSetWindowShouldClose(window, true);
 	}
 }
