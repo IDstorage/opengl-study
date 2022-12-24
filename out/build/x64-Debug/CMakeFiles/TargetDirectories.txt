@@ -1,0 +1,5 @@
+C:/Users/Minjong/Desktop/Projects/opengl-study/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/Minjong/Desktop/Projects/opengl-study/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Minjong/Desktop/Projects/opengl-study/out/build/x64-Debug/opengl-study/CMakeFiles/opengl-study.dir
+C:/Users/Minjong/Desktop/Projects/opengl-study/out/build/x64-Debug/opengl-study/CMakeFiles/edit_cache.dir
+C:/Users/Minjong/Desktop/Projects/opengl-study/out/build/x64-Debug/opengl-study/CMakeFiles/rebuild_cache.dir
