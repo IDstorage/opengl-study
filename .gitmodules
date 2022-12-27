@@ -1,0 +1,3 @@
+[submodule "opengl-study/opengl-study-bin"]
+	path = opengl-study/opengl-study-bin
+	url = git@github.com:IDstorage/opengl-study-bin.git

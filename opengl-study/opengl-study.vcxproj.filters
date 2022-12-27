@@ -21,7 +21,7 @@
     <ClCompile Include="00_Window.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="common\src\glad.c">
+    <ClCompile Include="opengl-study-bin\src\glad.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
