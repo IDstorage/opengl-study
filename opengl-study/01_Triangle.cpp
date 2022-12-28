@@ -94,6 +94,49 @@ public:
 	GLenum GetType() const { return shaderType; }
 };
 
+class CustomShaderProgram {
+private:
+	unsigned int programObject;
+	
+public:
+	CustomShaderProgram() : programObject(glCreateProgram()) {}
+	~CustomShaderProgram() {
+		glDeleteProgram(programObject);
+	}
+
+public:
+	bool Attach(GLenum shaderType, const std::string& fileName) {
+		auto shader = CustomShader(shaderType);
+		shader.LoadShaderFile(fileName);
+		if (!shader.CompileShader()) return false;
+		return Attach(shader);
+	}
+	bool Attach(const CustomShader& shader) {
+		glAttachShader(programObject, shader.GetObject());
+		return true;
+	}
+
+	bool Link() {
+		glLinkProgram(programObject);
+
+		int success;
+		glGetProgramiv(programObject, GL_LINK_STATUS, &success);
+		if (!success) {
+			char infoLog[512];
+			glGetProgramInfoLog(programObject, 512, NULL, infoLog);
+			std::cerr << "ERROR::SHADER_PROGRAM::LINK_FAILED\n" << infoLog << std::endl;
+			return false;
+		}
+
+		return true;
+	}
+
+public:
+	unsigned int GetObject() const {
+		return programObject;
+	}
+};
+
 
 int main() {
 	glfwInit();
@@ -118,40 +161,19 @@ int main() {
 	glfwSetFramebufferSizeCallback(window, OnResizeCallback);
 
 #pragma region Shader Compile/Link
-	auto vertexShader = std::make_unique<CustomShader>(GL_VERTEX_SHADER);
-	vertexShader->LoadShaderFile("./01_Triangle.vert");
-	bool ret = vertexShader->CompileShader();
+	auto shaderProgram = std::make_unique<CustomShaderProgram>();
+	bool ret = shaderProgram->Attach(GL_VERTEX_SHADER, "./01_Triangle.vert");
+	ret &= shaderProgram->Attach(GL_FRAGMENT_SHADER, "./01_Triangle.frag");
 	if (!ret) {
 		glfwTerminate();
 		return -1;
 	}
-
-	auto fragmentShader = std::make_unique<CustomShader>(GL_FRAGMENT_SHADER);
-	fragmentShader->LoadShaderFile("./01_Triangle.frag");
-	ret = fragmentShader->CompileShader();
+	
+	ret = shaderProgram->Link();
 	if (!ret) {
 		glfwTerminate();
 		return -1;
 	}
-
-	unsigned int shaderProgram;
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader->GetObject());
-	glAttachShader(shaderProgram, fragmentShader->GetObject());
-	glLinkProgram(shaderProgram);
-
-	int success;
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
-		char infoLog[512];
-		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-		std::cerr << "ERROR::SHADER_PROGRAM::LINK_FAILED\n" << infoLog << std::endl;
-		glfwTerminate();
-		return -1;
-	}
-
-	vertexShader.reset();
-	fragmentShader.reset();
 #pragma endregion
 
 	/* 
@@ -162,7 +184,29 @@ int main() {
 	 * 이 NDC는 glViewport 함수에 전달한 데이터(픽셀 수)를 바탕으로 Screen-space coordinates(화면 좌표)로 변환된다. (Viewport transform, 뷰포트 변환)
 	 * 그렇게 변환된 screen-space coordinates는 fragment로 변환되어 fragment shader의 입력으로 전달된다.
 	 */
-	float vertices[] = { -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f };
+	float vertices[] = {
+		0.5f, 0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		-0.5f, -0.5f, 0.0f,
+		-0.5f, 0.5f, 0.0f
+	};
+	int indices[] = {
+		0, 1, 3,
+		1, 2, 3
+	};
+	//float vertices[] = {
+	//	-0.6f, -0.5f, 0.0f,
+	//	-0.6f, 0.5f, 0.0f,
+	//	-0.1f, 0.5f, 0.0f,
+
+	//	0.6f, 0.5f, 0.0f,
+	//	0.6f, -0.5f, 0.0f,
+	//	0.1f, -0.5f, 0.0f
+	//};
+	//int indices[] = {
+	//	0, 1, 2,
+	//	3, 4, 5
+	//};
 
 	/*
 	 * 정점 데이터를 vertex shader에 전달해야 한다.
@@ -170,9 +214,10 @@ int main() {
 	 *  - OpenGL이 어떻게 메모리를 해석할 것인지 구성
 	 *  - 데이터를 어떻게 그래픽 카드에 전달할 것인지 명시
 	 */
-	unsigned int vbo, vao; // Vertex Buffer Object / Vertex Array Object
+	unsigned int vbo, vao, ebo; // Vertex Buffer Object / Vertex Array Object / Element array Buffer Object
 	glGenBuffers(1, &vbo); // 고유한 버퍼 ID를 생성
 	glGenVertexArrays(1, &vao);
+	glGenBuffers(1, &ebo);
 
 	glBindVertexArray(vao);
 
@@ -186,24 +231,36 @@ int main() {
 	 */
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL);
 	glEnableVertexAttribArray(0);
 
 
+	// Set wireframe mode
+	bool isWireframeMode = true;
+	glPolygonMode(GL_FRONT_AND_BACK, isWireframeMode ? GL_LINE : GL_FILL);
+
+
+#pragma region Rendering Loop
 	while (!glfwWindowShouldClose(window)) {
 		ProcessInput(window);
 
-		glUseProgram(shaderProgram);
+		glUseProgram(shaderProgram->GetObject());
 		glBindVertexArray(vao);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_INT, 0);
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
+#pragma endregion
 
 	glDeleteVertexArrays(1, &vao);
 	glDeleteBuffers(1, &vbo);
-	glDeleteProgram(shaderProgram);
+	glDeleteBuffers(1, &ebo);
+
+	shaderProgram.reset();
 
 	glfwTerminate();
 	return 0;
