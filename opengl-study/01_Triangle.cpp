@@ -137,6 +137,81 @@ public:
 	}
 };
 
+class StaticPolygon {
+private:
+	std::vector<float> vertices;
+	std::vector<int> indices;
+
+	// Vertex Buffer Object / Vertex Array Object / Element array Buffer Object
+	unsigned int vao, vbo, ebo;
+
+	bool shouldWireframe;
+
+public:
+	StaticPolygon() : shouldWireframe(false) {
+		glGenBuffers(1, &vbo); // 고유한 버퍼 ID를 생성
+		glGenVertexArrays(1, &vao);
+		glGenBuffers(1, &ebo);
+	}
+	~StaticPolygon() {
+		glDeleteVertexArrays(1, &vao);
+		glDeleteBuffers(1, &vbo);
+		glDeleteBuffers(1, &ebo);
+	}
+
+public:
+	/*
+	 * 정점 데이터를 vertex shader에 전달해야 한다.
+	 *  - GPU에 정점 데이터를 저장할 공간 할당
+	 *  - OpenGL이 어떻게 메모리를 해석할 것인지 구성
+	 *  - 데이터를 어떻게 그래픽 카드에 전달할 것인지 명시
+	 */
+	void SetVertices(const std::initializer_list<float>& verts) {
+		vertices = verts;
+
+		auto vertsArray = vertices.data();
+
+		// vao를 VertexArray에 바인딩하고 시작
+		glBindVertexArray(vao);
+
+		// GL_ARRAY_BUFFER에 vbo 바인드
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		/* 데이터를 현재 바인딩된 버퍼에 복사하는 기능(아까 glBindBuffer때문에 GL_ARRAY_BUFFER는 vbo를 가리킴)
+		 * 마지막 인자는 그래픽 카드가 데이터를 관리하는 방법
+		 *  - GL_STATIC_DRAW : 데이터가 거의 변하지 않음
+		 *  - GL_DYNAMIC_DRAW : 데이터가 자주 변경됨
+		 *  - GL_STREAM_DRAW : 데이터가 그려질 때마다 변경됨
+		 */
+		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertsArray, GL_STATIC_DRAW);
+	}
+
+	void SetIndices(const std::initializer_list<int>& ind) {
+		indices = ind;
+
+		auto indArray = indices.data();
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), indArray, GL_STATIC_DRAW);
+
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL);
+		glEnableVertexAttribArray(0);
+	}
+
+	void SetWireframeMode(bool active) {
+		shouldWireframe = active;
+	}
+
+public:
+	void Draw() {
+		glPolygonMode(GL_FRONT_AND_BACK, shouldWireframe ? GL_LINE : GL_FILL);
+
+		glBindVertexArray(vao);
+		glDrawElements(GL_TRIANGLES, indices.size() * sizeof(int), GL_UNSIGNED_INT, 0);
+	}
+};
+
+
+bool isWFKeyPressed = false;
 
 int main() {
 	glfwInit();
@@ -184,83 +259,53 @@ int main() {
 	 * 이 NDC는 glViewport 함수에 전달한 데이터(픽셀 수)를 바탕으로 Screen-space coordinates(화면 좌표)로 변환된다. (Viewport transform, 뷰포트 변환)
 	 * 그렇게 변환된 screen-space coordinates는 fragment로 변환되어 fragment shader의 입력으로 전달된다.
 	 */
-	float vertices[] = {
-		0.5f, 0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		-0.5f, -0.5f, 0.0f,
-		-0.5f, 0.5f, 0.0f
-	};
-	int indices[] = {
-		0, 1, 3,
-		1, 2, 3
-	};
-	//float vertices[] = {
-	//	-0.6f, -0.5f, 0.0f,
-	//	-0.6f, 0.5f, 0.0f,
-	//	-0.1f, 0.5f, 0.0f,
+	auto leftTriangle = std::make_unique<StaticPolygon>();
+	leftTriangle->SetVertices({
+		-0.525f, 0.525f, 0.0f,	// left-top
+		-0.525f, -0.475f, 0.0f,	// left-bottom
+		0.475f, 0.525f, 0.0f		// right-top
+	});
+	leftTriangle->SetIndices({
+		//0, 1, 2		// Counter-Clockwise
+		0, 2, 1	// Clockwise
+	});
 
-	//	0.6f, 0.5f, 0.0f,
-	//	0.6f, -0.5f, 0.0f,
-	//	0.1f, -0.5f, 0.0f
-	//};
-	//int indices[] = {
-	//	0, 1, 2,
-	//	3, 4, 5
-	//};
-
-	/*
-	 * 정점 데이터를 vertex shader에 전달해야 한다.
-	 *  - GPU에 정점 데이터를 저장할 공간 할당
-	 *  - OpenGL이 어떻게 메모리를 해석할 것인지 구성
-	 *  - 데이터를 어떻게 그래픽 카드에 전달할 것인지 명시
-	 */
-	unsigned int vbo, vao, ebo; // Vertex Buffer Object / Vertex Array Object / Element array Buffer Object
-	glGenBuffers(1, &vbo); // 고유한 버퍼 ID를 생성
-	glGenVertexArrays(1, &vao);
-	glGenBuffers(1, &ebo);
-
-	glBindVertexArray(vao);
-
-	// GL_ARRAY_BUFFER에 vbo 바인드
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	/* 데이터를 현재 바인딩된 버퍼에 복사하는 기능(아까 glBindBuffer때문에 GL_ARRAY_BUFFER는 vbo를 가리킴)
-	 * 마지막 인자는 그래픽 카드가 데이터를 관리하는 방법
-	 *  - GL_STATIC_DRAW : 데이터가 거의 변하지 않음
-	 *  - GL_DYNAMIC_DRAW : 데이터가 자주 변경됨
-	 *  - GL_STREAM_DRAW : 데이터가 그려질 때마다 변경됨
-	 */
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL);
-	glEnableVertexAttribArray(0);
-
-
-	// Set wireframe mode
-	bool isWireframeMode = true;
-	glPolygonMode(GL_FRONT_AND_BACK, isWireframeMode ? GL_LINE : GL_FILL);
-
+	auto rightTriangle = std::make_unique<StaticPolygon>();
+	rightTriangle->SetVertices({
+		0.525f, 0.475f, 0.0f,	// right-top
+		-0.475f, -0.525f, 0.0f,	// left-bottom
+		0.525f, -0.525f, 0.0f		// right-bottom
+	});
+	rightTriangle->SetIndices({
+		0, 1, 2		// Counter-Clockwise
+		//0, 2, 1	// Clockwise
+	});
+	rightTriangle->SetWireframeMode(true);
 
 #pragma region Rendering Loop
 	while (!glfwWindowShouldClose(window)) {
 		ProcessInput(window);
 
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
 		glUseProgram(shaderProgram->GetObject());
-		glBindVertexArray(vao);
-		glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_INT, 0);
+
+		leftTriangle->SetWireframeMode(isWFKeyPressed);
+		rightTriangle->SetWireframeMode(!isWFKeyPressed);
+
+		leftTriangle->Draw();
+		rightTriangle->Draw();
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
 #pragma endregion
 
-	glDeleteVertexArrays(1, &vao);
-	glDeleteBuffers(1, &vbo);
-	glDeleteBuffers(1, &ebo);
-
 	shaderProgram.reset();
+
+	leftTriangle.reset();
+	rightTriangle.reset();
 
 	glfwTerminate();
 	return 0;
@@ -274,4 +319,6 @@ void ProcessInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
+
+	isWFKeyPressed = glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS;
 }
