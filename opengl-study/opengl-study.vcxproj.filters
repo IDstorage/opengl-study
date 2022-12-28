@@ -13,16 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\01_Triangle">
+      <UniqueIdentifier>{e1c30674-31e9-4b52-90f8-4184cebcce41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00_Window">
+      <UniqueIdentifier>{ba2c0b94-c70e-4511-8dca-f287ea1a6a55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="01_Triangle.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="00_Window.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="opengl-study-bin\src\glad.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="01_Triangle.cpp">
+      <Filter>소스 파일\01_Triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="00_Window.cpp">
+      <Filter>소스 파일\00_Window</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="01_Triangle.vert">
+      <Filter>소스 파일\01_Triangle</Filter>
+    </None>
+    <None Include="01_Triangle.frag">
+      <Filter>소스 파일\01_Triangle</Filter>
+    </None>
   </ItemGroup>
 </Project>
