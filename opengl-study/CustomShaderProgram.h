@@ -18,6 +18,8 @@ public:
 
 	bool Link();
 
+	void Use();
+
 public:
 	unsigned int GetObject() const;
 };

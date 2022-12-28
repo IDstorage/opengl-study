@@ -101,13 +101,11 @@ int main() {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glUseProgram(shaderProgram->GetObject());
-
+		shaderProgram->Use();
 		leftTriangle->SetWireframeMode(isWFKeyPressed);
 		leftTriangle->Draw();
 
-		glUseProgram(shaderProgram2->GetObject());
-
+		shaderProgram2->Use();
 		rightTriangle->SetWireframeMode(!isWFKeyPressed);
 		rightTriangle->Draw();
 
