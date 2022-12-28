@@ -156,10 +156,20 @@
     </ClCompile>
     <ClCompile Include="01_Triangle.cpp" />
     <ClCompile Include="opengl-study-bin\src\glad.c" />
+    <ClCompile Include="GLSLFile.cpp" />
+    <ClCompile Include="CustomShader.cpp" />
+    <ClCompile Include="CustomShaderProgram.cpp" />
+    <ClCompile Include="StaticPolygon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="01_Triangle.frag" />
     <None Include="01_Triangle.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GLSLFile.h" />
+    <ClInclude Include="CustomShader.h" />
+    <ClInclude Include="CustomShaderProgram.h" />
+    <ClInclude Include="StaticPolygon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

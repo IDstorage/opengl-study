@@ -19,6 +19,9 @@
     <Filter Include="소스 파일\00_Window">
       <UniqueIdentifier>{ba2c0b94-c70e-4511-8dca-f287ea1a6a55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\01_Triangle">
+      <UniqueIdentifier>{1c3c4a6a-3492-4e10-ada4-ff7934806567}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="opengl-study-bin\src\glad.c">
@@ -30,6 +33,18 @@
     <ClCompile Include="00_Window.cpp">
       <Filter>소스 파일\00_Window</Filter>
     </ClCompile>
+    <ClCompile Include="GLSLFile.cpp">
+      <Filter>소스 파일\01_Triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomShader.cpp">
+      <Filter>소스 파일\01_Triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomShaderProgram.cpp">
+      <Filter>소스 파일\01_Triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticPolygon.cpp">
+      <Filter>소스 파일\01_Triangle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="01_Triangle.vert">
@@ -38,5 +53,19 @@
     <None Include="01_Triangle.frag">
       <Filter>소스 파일\01_Triangle</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GLSLFile.h">
+      <Filter>헤더 파일\01_Triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomShader.h">
+      <Filter>헤더 파일\01_Triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomShaderProgram.h">
+      <Filter>헤더 파일\01_Triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticPolygon.h">
+      <Filter>헤더 파일\01_Triangle</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
