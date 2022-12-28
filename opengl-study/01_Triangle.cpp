@@ -47,6 +47,20 @@ int main() {
 		glfwTerminate();
 		return -1;
 	}
+
+	auto shaderProgram2 = std::make_unique<CustomShaderProgram>();
+	ret = shaderProgram2->Attach(GL_VERTEX_SHADER, "./01_Triangle.vert");
+	ret &= shaderProgram2->Attach(GL_FRAGMENT_SHADER, "./01_Triangle_2.frag");
+	if (!ret) {
+		glfwTerminate();
+		return -1;
+	}
+
+	ret = shaderProgram2->Link();
+	if (!ret) {
+		glfwTerminate();
+		return -1;
+	}
 #pragma endregion
 
 	/* 
@@ -90,9 +104,11 @@ int main() {
 		glUseProgram(shaderProgram->GetObject());
 
 		leftTriangle->SetWireframeMode(isWFKeyPressed);
-		rightTriangle->SetWireframeMode(!isWFKeyPressed);
-
 		leftTriangle->Draw();
+
+		glUseProgram(shaderProgram2->GetObject());
+
+		rightTriangle->SetWireframeMode(!isWFKeyPressed);
 		rightTriangle->Draw();
 
 		glfwPollEvents();
@@ -101,6 +117,7 @@ int main() {
 #pragma endregion
 
 	shaderProgram.reset();
+	shaderProgram2.reset();
 
 	leftTriangle.reset();
 	rightTriangle.reset();

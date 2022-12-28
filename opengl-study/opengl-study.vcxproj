@@ -164,6 +164,7 @@
   <ItemGroup>
     <None Include="01_Triangle.frag" />
     <None Include="01_Triangle.vert" />
+    <None Include="01_Triangle_2.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLSLFile.h" />

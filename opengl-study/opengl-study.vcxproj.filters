@@ -53,6 +53,9 @@
     <None Include="01_Triangle.frag">
       <Filter>소스 파일\01_Triangle</Filter>
     </None>
+    <None Include="01_Triangle_2.frag">
+      <Filter>소스 파일\01_Triangle</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLSLFile.h">
