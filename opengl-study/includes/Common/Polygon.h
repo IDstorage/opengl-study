@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-class StaticPolygon {
+class Polygon {
 private:
 	std::vector<float> vertices;
 	std::vector<int> indices;
@@ -12,8 +12,8 @@ private:
 	bool shouldWireframe;
 
 public:
-	StaticPolygon();
-	~StaticPolygon();
+	Polygon();
+	~Polygon();
 
 public:
 	void SetVertices(const std::initializer_list<float>& verts);

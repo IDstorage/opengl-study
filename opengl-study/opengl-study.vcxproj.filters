@@ -45,11 +45,14 @@
     <ClCompile Include="src\Common\GLSLFile.cpp">
       <Filter>소스 파일\Common</Filter>
     </ClCompile>
-    <ClCompile Include="src\Common\StaticPolygon.cpp">
+    <ClCompile Include="src\Common\Polygon.cpp">
       <Filter>소스 파일\Common</Filter>
     </ClCompile>
     <ClCompile Include="src\00_Window\00_Window.cpp">
       <Filter>소스 파일\00_Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\02_Shader\02_Shader.cpp">
+      <Filter>소스 파일\02_Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -62,10 +65,10 @@
     <None Include="src\01_Triangle\01_Triangle_2.frag">
       <Filter>소스 파일\01_Triangle</Filter>
     </None>
-    <None Include="src\02_Shader\TestVertexShader.frag">
+    <None Include="src\02_Shader\02_Shader.frag">
       <Filter>소스 파일\02_Shader</Filter>
     </None>
-    <None Include="src\02_Shader\TestVertexShader.vert">
+    <None Include="src\02_Shader\02_Shader.vert">
       <Filter>소스 파일\02_Shader</Filter>
     </None>
   </ItemGroup>
@@ -84,7 +87,7 @@
     <ClInclude Include="includes\Common\GLSLFile.h">
       <Filter>헤더 파일\Common</Filter>
     </ClInclude>
-    <ClInclude Include="includes\Common\StaticPolygon.h">
+    <ClInclude Include="includes\Common\Polygon.h">
       <Filter>헤더 파일\Common</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,14 +1,14 @@
-#include "Common/StaticPolygon.h"
+#include "Common/Polygon.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-StaticPolygon::StaticPolygon() : shouldWireframe(false) {
+Polygon::Polygon() : shouldWireframe(false) {
 	glGenBuffers(1, &vbo); // 고유한 버퍼 ID를 생성
 	glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &ebo);
 }
-StaticPolygon::~StaticPolygon() {
+Polygon::~Polygon() {
 	glDeleteVertexArrays(1, &vao);
 	glDeleteBuffers(1, &vbo);
 	glDeleteBuffers(1, &ebo);
@@ -21,7 +21,7 @@ StaticPolygon::~StaticPolygon() {
  *  - OpenGL이 어떻게 메모리를 해석할 것인지 구성
  *  - 데이터를 어떻게 그래픽 카드에 전달할 것인지 명시
  */
-void StaticPolygon::SetVertices(const std::initializer_list<float>& verts) {
+void Polygon::SetVertices(const std::initializer_list<float>& verts) {
 	vertices = verts;
 
 	auto vertsArray = vertices.data();
@@ -68,7 +68,7 @@ void StaticPolygon::SetVertices(const std::initializer_list<float>& verts) {
 	glBindVertexArray(0);
 }
 
-void StaticPolygon::SetIndices(const std::initializer_list<int>& ind) {
+void Polygon::SetIndices(const std::initializer_list<int>& ind) {
 	indices = ind;
 
 	auto indArray = indices.data();
@@ -81,12 +81,12 @@ void StaticPolygon::SetIndices(const std::initializer_list<int>& ind) {
 	glBindVertexArray(0);
 }
 
-void StaticPolygon::SetWireframeMode(bool active) {
+void Polygon::SetWireframeMode(bool active) {
 	shouldWireframe = active;
 }
 
 
-void StaticPolygon::Draw() {
+void Polygon::Draw() {
 	glPolygonMode(GL_FRONT_AND_BACK, shouldWireframe ? GL_LINE : GL_FILL);
 
 	glBindVertexArray(vao);

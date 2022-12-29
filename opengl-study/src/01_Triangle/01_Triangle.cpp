@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "Common/CustomShaderProgram.h"
-#include "Common/StaticPolygon.h"
+#include "Common/Polygon.h"
 
 void OnResizeCallback(GLFWwindow*, int, int);
 void ProcessInput(GLFWwindow*);
@@ -71,7 +71,7 @@ int main() {
 	 * 이 NDC는 glViewport 함수에 전달한 데이터(픽셀 수)를 바탕으로 Screen-space coordinates(화면 좌표)로 변환된다. (Viewport transform, 뷰포트 변환)
 	 * 그렇게 변환된 screen-space coordinates는 fragment로 변환되어 fragment shader의 입력으로 전달된다.
 	 */
-	auto leftTriangle = std::make_unique<StaticPolygon>();
+	auto leftTriangle = std::make_unique<Polygon>();
 	leftTriangle->SetVertices({
 		-0.525f, 0.525f, 0.0f,	// left-top
 		-0.525f, -0.475f, 0.0f,	// left-bottom
@@ -82,7 +82,7 @@ int main() {
 		0, 2, 1	// Clockwise
 	});
 
-	auto rightTriangle = std::make_unique<StaticPolygon>();
+	auto rightTriangle = std::make_unique<Polygon>();
 	rightTriangle->SetVertices({
 		0.525f, 0.475f, 0.0f,	// right-top
 		-0.475f, -0.525f, 0.0f,	// left-bottom
