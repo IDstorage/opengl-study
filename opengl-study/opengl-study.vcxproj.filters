@@ -19,64 +19,73 @@
     <Filter Include="소스 파일\00_Window">
       <UniqueIdentifier>{ba2c0b94-c70e-4511-8dca-f287ea1a6a55}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\01_Triangle">
-      <UniqueIdentifier>{1c3c4a6a-3492-4e10-ada4-ff7934806567}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\02_Shader">
       <UniqueIdentifier>{327d9f9d-c902-4da7-b35d-8ae849fda664}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Common">
+      <UniqueIdentifier>{1c3c4a6a-3492-4e10-ada4-ff7934806567}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Common">
+      <UniqueIdentifier>{d64d0040-4c89-4cad-90fd-196886e7fc5e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="opengl-study-bin\src\glad.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="01_Triangle.cpp">
+    <ClCompile Include="src\01_Triangle\01_Triangle.cpp">
       <Filter>소스 파일\01_Triangle</Filter>
     </ClCompile>
-    <ClCompile Include="00_Window.cpp">
+    <ClCompile Include="src\Common\CustomShader.cpp">
+      <Filter>소스 파일\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Common\CustomShaderProgram.cpp">
+      <Filter>소스 파일\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Common\GLSLFile.cpp">
+      <Filter>소스 파일\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Common\StaticPolygon.cpp">
+      <Filter>소스 파일\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\00_Window\00_Window.cpp">
       <Filter>소스 파일\00_Window</Filter>
     </ClCompile>
-    <ClCompile Include="GLSLFile.cpp">
-      <Filter>소스 파일\01_Triangle</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomShader.cpp">
-      <Filter>소스 파일\01_Triangle</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomShaderProgram.cpp">
-      <Filter>소스 파일\01_Triangle</Filter>
-    </ClCompile>
-    <ClCompile Include="StaticPolygon.cpp">
-      <Filter>소스 파일\01_Triangle</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="01_Triangle.vert">
+    <None Include="src\01_Triangle\01_Triangle.frag">
       <Filter>소스 파일\01_Triangle</Filter>
     </None>
-    <None Include="01_Triangle.frag">
+    <None Include="src\01_Triangle\01_Triangle.vert">
       <Filter>소스 파일\01_Triangle</Filter>
     </None>
-    <None Include="01_Triangle_2.frag">
+    <None Include="src\01_Triangle\01_Triangle_2.frag">
       <Filter>소스 파일\01_Triangle</Filter>
+    </None>
+    <None Include="src\02_Shader\TestVertexShader.frag">
+      <Filter>소스 파일\02_Shader</Filter>
+    </None>
+    <None Include="src\02_Shader\TestVertexShader.vert">
+      <Filter>소스 파일\02_Shader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GLSLFile.h">
-      <Filter>헤더 파일\01_Triangle</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomShader.h">
-      <Filter>헤더 파일\01_Triangle</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomShaderProgram.h">
-      <Filter>헤더 파일\01_Triangle</Filter>
-    </ClInclude>
-    <ClInclude Include="StaticPolygon.h">
-      <Filter>헤더 파일\01_Triangle</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="glsl_format.txt">
+    <Text Include="src\02_Shader\glsl_format.txt">
       <Filter>소스 파일\02_Shader</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="includes\Common\CustomShader.h">
+      <Filter>헤더 파일\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Common\CustomShaderProgram.h">
+      <Filter>헤더 파일\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Common\GLSLFile.h">
+      <Filter>헤더 파일\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Common\StaticPolygon.h">
+      <Filter>헤더 파일\Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

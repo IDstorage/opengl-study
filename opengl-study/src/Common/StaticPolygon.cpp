@@ -1,4 +1,4 @@
-#include "StaticPolygon.h"
+#include "Common/StaticPolygon.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

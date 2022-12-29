@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-#include "CustomShaderProgram.h"
-#include "StaticPolygon.h"
+#include "Common/CustomShaderProgram.h"
+#include "Common/StaticPolygon.h"
 
 void OnResizeCallback(GLFWwindow*, int, int);
 void ProcessInput(GLFWwindow*);

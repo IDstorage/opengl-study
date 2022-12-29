@@ -82,7 +82,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(ProjectDir)opengl-study-bin\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)opengl-study-bin\includes;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)opengl-study-bin\includes;$(ProjectDir)includes;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -151,29 +151,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="00_Window.cpp">
+    <ClCompile Include="opengl-study-bin\src\glad.c" />
+    <ClCompile Include="src\00_Window\00_Window.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="01_Triangle.cpp" />
-    <ClCompile Include="opengl-study-bin\src\glad.c" />
-    <ClCompile Include="GLSLFile.cpp" />
-    <ClCompile Include="CustomShader.cpp" />
-    <ClCompile Include="CustomShaderProgram.cpp" />
-    <ClCompile Include="StaticPolygon.cpp" />
+    <ClCompile Include="src\01_Triangle\01_Triangle.cpp" />
+    <ClCompile Include="src\Common\CustomShader.cpp" />
+    <ClCompile Include="src\Common\CustomShaderProgram.cpp" />
+    <ClCompile Include="src\Common\GLSLFile.cpp" />
+    <ClCompile Include="src\Common\StaticPolygon.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="01_Triangle.frag" />
-    <None Include="01_Triangle.vert" />
-    <None Include="01_Triangle_2.frag" />
+    <None Include="src\01_Triangle\01_Triangle.frag" />
+    <None Include="src\01_Triangle\01_Triangle.vert" />
+    <None Include="src\01_Triangle\01_Triangle_2.frag" />
+    <None Include="src\02_Shader\TestVertexShader.frag" />
+    <None Include="src\02_Shader\TestVertexShader.vert" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GLSLFile.h" />
-    <ClInclude Include="CustomShader.h" />
-    <ClInclude Include="CustomShaderProgram.h" />
-    <ClInclude Include="StaticPolygon.h" />
+    <Text Include="src\02_Shader\glsl_format.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="glsl_format.txt" />
+    <ClInclude Include="includes\Common\CustomShader.h" />
+    <ClInclude Include="includes\Common\CustomShaderProgram.h" />
+    <ClInclude Include="includes\Common\GLSLFile.h" />
+    <ClInclude Include="includes\Common\StaticPolygon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
