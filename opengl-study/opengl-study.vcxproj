@@ -172,6 +172,9 @@
     <ClInclude Include="CustomShaderProgram.h" />
     <ClInclude Include="StaticPolygon.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="glsl_format.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

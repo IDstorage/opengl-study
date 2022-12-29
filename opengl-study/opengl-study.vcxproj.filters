@@ -22,6 +22,9 @@
     <Filter Include="헤더 파일\01_Triangle">
       <UniqueIdentifier>{1c3c4a6a-3492-4e10-ada4-ff7934806567}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\02_Shader">
+      <UniqueIdentifier>{327d9f9d-c902-4da7-b35d-8ae849fda664}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="opengl-study-bin\src\glad.c">
@@ -70,5 +73,10 @@
     <ClInclude Include="StaticPolygon.h">
       <Filter>헤더 파일\01_Triangle</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="glsl_format.txt">
+      <Filter>소스 파일\02_Shader</Filter>
+    </Text>
   </ItemGroup>
 </Project>

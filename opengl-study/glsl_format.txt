@@ -1,0 +1,46 @@
+// 무조건 시작은 버전으로
+//#version 330 core  <- OpenGL3.3 Core-profile
+#version version_number
+
+/*
+ * 각각의 입력 변수들을 vertex attribute라고 칭함
+ * 
+ * int nrAttributes;
+ * glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+ * 로 현재 하드웨어에서 지원하는 vertex attribute 개수 조회 가능
+ * (일반적으로 4가지 요소를 가진 vertex attribute를 최소 16개까지는 보장)
+ * 
+ * int, float, double, uint, bool, vector, matrices 등이 있음
+ * 
+ * Vector
+ *  - 접두사와 접미사로 요소의 타입, 개수가 정해진다.
+ *    - vec?  : ?개의 float으로 구성된 vector
+ *    - bvec? : ?개의 boolean으로 구성된 vector
+ *    - ivec? : ?개의 integer로 구성된 vector
+ *    - uvec? : ?개의 unsigned integer로 구성된 vector
+ *    - dvec? : ?개의 double로 구성된 vector
+ *  - 벡터는 xyzw, 컬러는 rgba, 텍스쳐 좌표는 stpq로 나타낸다.
+ *  - Swizzling(스위즐링)이 가능하다
+ *    - vec2 v;
+ *    - vec4 v2 = v.xyxx;
+ *    - vec3 v3 = v2.xywy;
+ *    - 이렇게 각 요소를 임의로 재배열하고 결합하여 벡터를 구성하는 기능을 뜻한다.
+ * 
+ * layout 명시자로 해당하는 입력의 location 메타데이터를 정의할 수 있다.
+ * layout (location = ?) 형태로 지정하며 이어서 입력 변수 선언이 위치한다.
+ */
+in type in_variable_name;
+in type in_variable_name;
+
+// 출력 변수
+out type out_variable_name;
+
+uniform type uniform_name;
+
+void main() {
+	// 입력 값을 처리하고 그래픽 작업을 진행한다.
+	...
+
+	// 처리된 결과를 출력 변수에 대입
+	out_variable_name = weird_stuff_we_processed;
+}
