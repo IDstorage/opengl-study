@@ -8,7 +8,7 @@
 
 CustomShader::CustomShader(unsigned int type) : shaderType(type) {
 	// Shader 생성
-	// GL_VERTEX_SHADER / GL_FRAGEMENT_SHADER 등을 인자로 줄 수 있다.
+	// GL_VERTEX_SHADER / GL_FRAGEMENT`_SHADER 등을 인자로 줄 수 있다.
 	shaderObject = glCreateShader(shaderType);
 }
 CustomShader::~CustomShader() {
