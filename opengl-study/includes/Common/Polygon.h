@@ -1,5 +1,8 @@
 #pragma once
 #include <vector>
+#include <memory>
+
+class CustomShaderProgram;
 
 class Polygon {
 private:
@@ -8,6 +11,9 @@ private:
 
 	// Vertex Buffer Object / Vertex Array Object / Element array Buffer Object
 	unsigned int vao, vbo, ebo;
+
+	// Target shader program
+	std::shared_ptr<CustomShaderProgram> targetShaderProg;
 
 	bool shouldWireframe;
 
@@ -20,6 +26,8 @@ public:
 	void SetIndices(const std::initializer_list<int>& ind);
 
 	void SetWireframeMode(bool active);
+
+	void SetTargetShaderProg(const std::shared_ptr<CustomShaderProgram>& prog);
 
 public:
 	void Draw();

@@ -1,4 +1,5 @@
 #include "Common/Polygon.h"
+#include "Common/CustomShaderProgram.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -85,8 +86,16 @@ void Polygon::SetWireframeMode(bool active) {
 	shouldWireframe = active;
 }
 
+void Polygon::SetTargetShaderProg(const std::shared_ptr<CustomShaderProgram>& prog) {
+	targetShaderProg = prog;
+}
+
 
 void Polygon::Draw() {
+	if (targetShaderProg != nullptr) {
+		targetShaderProg->Use();
+	}
+
 	glPolygonMode(GL_FRONT_AND_BACK, shouldWireframe ? GL_LINE : GL_FILL);
 
 	glBindVertexArray(vao);

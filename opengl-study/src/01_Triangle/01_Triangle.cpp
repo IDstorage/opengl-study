@@ -34,7 +34,7 @@ int main() {
 	glfwSetFramebufferSizeCallback(window, OnResizeCallback);
 
 #pragma region Shader Compile/Link
-	auto shaderProgram = std::make_unique<CustomShaderProgram>();
+	auto shaderProgram = std::make_shared<CustomShaderProgram>();
 	bool ret = shaderProgram->Attach(GL_VERTEX_SHADER, "./src/01_Triangle/01_Triangle.vert");
 	ret &= shaderProgram->Attach(GL_FRAGMENT_SHADER, "./src/01_Triangle/01_Triangle.frag");
 	if (!ret) {
@@ -48,7 +48,7 @@ int main() {
 		return -1;
 	}
 
-	auto shaderProgram2 = std::make_unique<CustomShaderProgram>();
+	auto shaderProgram2 = std::make_shared<CustomShaderProgram>();
 	ret = shaderProgram2->Attach(GL_VERTEX_SHADER, "./src/01_Triangle/01_Triangle.vert");
 	ret &= shaderProgram2->Attach(GL_FRAGMENT_SHADER, "./src/01_Triangle/01_Triangle_2.frag");
 	if (!ret) {
@@ -81,6 +81,7 @@ int main() {
 		//0, 1, 2		// Counter-Clockwise
 		0, 2, 1	// Clockwise
 	});
+	leftTriangle->SetTargetShaderProg(shaderProgram);
 
 	auto rightTriangle = std::make_unique<Polygon>();
 	rightTriangle->SetVertices({
@@ -93,6 +94,7 @@ int main() {
 		//0, 2, 1	// Clockwise
 	});
 	rightTriangle->SetWireframeMode(true);
+	rightTriangle->SetTargetShaderProg(shaderProgram2);
 
 #pragma region Rendering Loop
 	while (!glfwWindowShouldClose(window)) {
@@ -101,11 +103,9 @@ int main() {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		shaderProgram->Use();
 		leftTriangle->SetWireframeMode(isWFKeyPressed);
 		leftTriangle->Draw();
 
-		shaderProgram2->Use();
 		rightTriangle->SetWireframeMode(!isWFKeyPressed);
 		rightTriangle->Draw();
 
