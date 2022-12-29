@@ -35,6 +35,10 @@ in type in_variable_name;
 // 출력 변수
 out type out_variable_name;
 
+/*
+ * OpenGL 코드에서 이 변수의 값을 설정한다.
+ * 이때 변수 이름(uniform_name)은 uniform 변수를 찾는 주소 역할을 한다.
+ */
 uniform type uniform_name;
 
 void main() {

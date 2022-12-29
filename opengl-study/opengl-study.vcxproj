@@ -156,12 +156,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\01_Triangle\01_Triangle.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\02_Shader\02_Shader.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\Common\CustomShader.cpp" />
     <ClCompile Include="src\Common\CustomShaderProgram.cpp" />
@@ -174,6 +174,7 @@
     <None Include="src\01_Triangle\01_Triangle_2.frag" />
     <None Include="src\02_Shader\02_Shader.frag" />
     <None Include="src\02_Shader\02_Shader.vert" />
+    <None Include="src\02_Shader\02_Shader_2.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\02_Shader\glsl_format.txt" />

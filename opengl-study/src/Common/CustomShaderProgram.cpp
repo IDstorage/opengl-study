@@ -52,6 +52,59 @@ void CustomShaderProgram::Use() {
 }
 
 
+bool CustomShaderProgram::SetInt(const std::string& name, int value) {
+	int location = glGetUniformLocation(programObject, name.c_str());
+	if (location == -1) return false;
+
+	// glGetUniformLocation은 glUseProgram의 호출이 필요없지만
+	// glUniformXX 계열 함수는 glUseProgram의 호출이 필수다.
+	glUseProgram(programObject);
+	glUniform1i(location, value);
+
+	return true;
+}
+
+bool CustomShaderProgram::SetUInt(const std::string& name, unsigned int value) {
+	int location = glGetUniformLocation(programObject, name.c_str());
+	if (location == -1) return false;
+
+	glUseProgram(programObject);
+	glUniform1ui(location, value);
+
+	return true;
+}
+
+bool CustomShaderProgram::SetFloat(const std::string& name, float value) {
+	int location = glGetUniformLocation(programObject, name.c_str());
+	if (location == -1) return false;
+
+	glUseProgram(programObject);
+	glUniform1f(location, value);
+
+	return true;
+}
+
+bool CustomShaderProgram::SetVec3(const std::string& name, float x, float y, float z) {
+	int location = glGetUniformLocation(programObject, name.c_str());
+	if (location == -1) return false;
+
+	glUseProgram(programObject);
+	glUniform3f(location, x, y, z);
+
+	return true;
+}
+
+bool CustomShaderProgram::SetVec4(const std::string& name, float x, float y, float z, float w) {
+	int location = glGetUniformLocation(programObject, name.c_str());
+	if (location == -1) return false;
+
+	glUseProgram(programObject);
+	glUniform4f(location, x, y, z, w);
+
+	return true;
+}
+
+
 unsigned int CustomShaderProgram::GetObject() const {
 	return programObject;
 }

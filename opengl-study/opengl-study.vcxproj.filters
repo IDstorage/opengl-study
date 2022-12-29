@@ -71,6 +71,9 @@
     <None Include="src\02_Shader\02_Shader.vert">
       <Filter>소스 파일\02_Shader</Filter>
     </None>
+    <None Include="src\02_Shader\02_Shader_2.frag">
+      <Filter>소스 파일\02_Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\02_Shader\glsl_format.txt">
