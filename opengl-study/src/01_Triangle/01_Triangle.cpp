@@ -35,8 +35,8 @@ int main() {
 
 #pragma region Shader Compile/Link
 	auto shaderProgram = std::make_unique<CustomShaderProgram>();
-	bool ret = shaderProgram->Attach(GL_VERTEX_SHADER, "./01_Triangle.vert");
-	ret &= shaderProgram->Attach(GL_FRAGMENT_SHADER, "./01_Triangle.frag");
+	bool ret = shaderProgram->Attach(GL_VERTEX_SHADER, "./src/01_Triangle/01_Triangle.vert");
+	ret &= shaderProgram->Attach(GL_FRAGMENT_SHADER, "./src/01_Triangle/01_Triangle.frag");
 	if (!ret) {
 		glfwTerminate();
 		return -1;
@@ -49,8 +49,8 @@ int main() {
 	}
 
 	auto shaderProgram2 = std::make_unique<CustomShaderProgram>();
-	ret = shaderProgram2->Attach(GL_VERTEX_SHADER, "./01_Triangle.vert");
-	ret &= shaderProgram2->Attach(GL_FRAGMENT_SHADER, "./01_Triangle_2.frag");
+	ret = shaderProgram2->Attach(GL_VERTEX_SHADER, "./src/01_Triangle/01_Triangle.vert");
+	ret &= shaderProgram2->Attach(GL_FRAGMENT_SHADER, "./src/01_Triangle/01_Triangle_2.frag");
 	if (!ret) {
 		glfwTerminate();
 		return -1;
