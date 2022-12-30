@@ -6,5 +6,6 @@ out vec3 outColor;
 
 void main() {
 	gl_Position = vec4(pos, 1.0f);
+	// fragment interpolation
 	outColor = color;
 }
