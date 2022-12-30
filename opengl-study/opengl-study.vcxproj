@@ -175,6 +175,8 @@
     <None Include="src\02_Shader\02_Shader.frag" />
     <None Include="src\02_Shader\02_Shader.vert" />
     <None Include="src\02_Shader\02_Shader_2.frag" />
+    <None Include="src\02_Shader\02_Shader_3.frag" />
+    <None Include="src\02_Shader\02_Shader_3.vert" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\02_Shader\glsl_format.txt" />

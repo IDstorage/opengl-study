@@ -41,30 +41,9 @@ void Polygon::SetVertices(const std::initializer_list<float>& verts) {
 	 */
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertsArray, GL_STATIC_DRAW);
 
-	/*
-	 * - vertices 구조
-	 * [   vert1   ][   vert2   ][   vert3   ]
-	 * | x | y | z || x | y | z || x | y | z |
-	 * 0   4   8   12   16  20  24   28  32  36
-	 * <--stride-->
-	 * offset: 0
-	 * 
-	 * 이 구조를 해석할 방법을 OpenGL에게 알려줘야 한다.
-	 * glVertexAttribPointer가 그 역할
-	 *   p1. 설정할 vertex 속성
-	 *        - vertex shader에서 작성한 layout (location = 0) 코드가 vertex 속성의 위치를 0으로 지정
-	 *   p2. vertex 속성의 크기(개수) (vec3이므로 3)
-	 *   p3. 데이터 타입 (OpenGL의 vec3는 GL_FLOAT형)
-	 *   p4. 데이터 정규화 (GL_TRUE면 [-1, 1]로 매핑, unsigned면 [0, 1]로 매핑)
-	 *   p5. Stride 크기(메모리)
-	 *        - 이어진 vertices 구조에서 어디까지가 한 vertex인지 구분
-	 *   p6. 오프셋 (void*)
-	 * 
-	 * 현재 GL_ARRAY_BUFFER에 바인딩된 오브젝트에서 데이터 가져옴 (그래서 이 함수 전에 glBindBuffers(GL_ARRAY_BUFFER, vbo)를 해준다.
-	 */
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 	// vertex 속성은 기본적으로 사용 못하게 설정되어 있어서 glEnableVertexAttribArray를 해줘야함. 인자는 location
-	glEnableVertexAttribArray(0);
+	//glEnableVertexAttribArray(0);
 
 	glBindVertexArray(0);
 }
@@ -78,6 +57,36 @@ void Polygon::SetIndices(const std::initializer_list<int>& ind) {
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), indArray, GL_STATIC_DRAW);
+
+	glBindVertexArray(0);
+}
+
+void Polygon::SetAttributes(int location, int count, unsigned int type, bool normalize, int size, void* offset) {
+	glBindVertexArray(vao);
+
+	/*
+	 * - vertices 구조
+	 * [   vert1   ][   vert2   ][   vert3   ]
+	 * | x | y | z || x | y | z || x | y | z |
+	 * 0   4   8   12   16  20  24   28  32  36
+	 * <--stride-->
+	 * offset: 0
+	 *
+	 * 이 구조를 해석할 방법을 OpenGL에게 알려줘야 한다.
+	 * glVertexAttribPointer가 그 역할
+	 *   p1. 설정할 vertex 속성
+	 *        - vertex shader에서 작성한 layout (location = 0) 코드가 vertex 속성의 위치를 0으로 지정
+	 *   p2. vertex 속성의 크기(개수) (vec3이므로 3)
+	 *   p3. 데이터 타입 (OpenGL의 vec3는 GL_FLOAT형)
+	 *   p4. 데이터 정규화 (GL_TRUE면 [-1, 1]로 매핑, unsigned면 [0, 1]로 매핑)
+	 *   p5. Stride 크기(메모리)
+	 *        - 이어진 vertices 구조에서 어디까지가 한 vertex인지 구분
+	 *   p6. 오프셋 (void*)
+	 *
+	 * 현재 GL_ARRAY_BUFFER에 바인딩된 오브젝트에서 데이터 가져옴 (그래서 이 함수 전에 glBindBuffers(GL_ARRAY_BUFFER, vbo)를 해준다.
+	 */
+	glVertexAttribPointer(location, count, type, normalize ? GL_TRUE : GL_FALSE, size, offset);
+	glEnableVertexAttribArray(location);
 
 	glBindVertexArray(0);
 }

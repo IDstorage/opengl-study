@@ -25,6 +25,8 @@ public:
 	void SetVertices(const std::initializer_list<float>& verts);
 	void SetIndices(const std::initializer_list<int>& ind);
 
+	void SetAttributes(int location, int count, unsigned int type, bool normalize, int size, void* offset);
+
 	void SetWireframeMode(bool active);
 
 	void SetTargetShaderProg(const std::shared_ptr<CustomShaderProgram>& prog);

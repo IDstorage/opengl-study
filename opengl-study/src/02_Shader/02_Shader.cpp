@@ -33,9 +33,20 @@ int main() {
 
 #pragma region Shader Compile/Link
 	auto shaderProgram = std::make_shared<CustomShaderProgram>();
-	bool ret = shaderProgram->Attach(GL_VERTEX_SHADER, "./src/02_Shader/02_Shader.vert");
-	//ret &= shaderProgram->Attach(GL_FRAGMENT_SHADER, "./src/02_Shader/02_Shader.frag");
-	ret &= shaderProgram->Attach(GL_FRAGMENT_SHADER, "./src/02_Shader/02_Shader_2.frag");
+	
+	bool ret = true;
+	/*{
+		ret &= shaderProgram->Attach(GL_VERTEX_SHADER, "./src/02_Shader/02_Shader.vert");
+		ret &= shaderProgram->Attach(GL_FRAGMENT_SHADER, "./src/02_Shader/02_Shader.frag");
+	}
+	{
+		ret &= shaderProgram->Attach(GL_FRAGMENT_SHADER, "./src/02_Shader/02_Shader_2.frag");
+	}*/
+	{
+		ret &= shaderProgram->Attach(GL_VERTEX_SHADER, "./src/02_Shader/02_Shader_3.vert");
+		ret &= shaderProgram->Attach(GL_FRAGMENT_SHADER, "./src/02_Shader/02_Shader_3.frag");
+	}
+
 	if (!ret) {
 		glfwTerminate();
 		return -1;
@@ -51,14 +62,23 @@ int main() {
 
 #pragma region Create polygon
 	auto triangle = std::make_unique<Polygon>();
+	//triangle->SetVertices({
+	//	0.0f, 0.5f, 0.0f,
+	//	0.5f, -0.5f, 0.0f,
+	//	-0.5f, -0.5f, 0.0f
+	//});
 	triangle->SetVertices({
-		0.0f, 0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		-0.5f, -0.5f, 0.0f
+		0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f
 	});
 	triangle->SetIndices({
 		0, 2, 1 // Counter-clockwise
 	});
+
+	triangle->SetAttributes(0, 3, GL_FLOAT, false, 6 * sizeof(float), NULL);
+	triangle->SetAttributes(1, 3, GL_FLOAT, false, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	
 	triangle->SetWireframeMode(false);
 	triangle->SetTargetShaderProg(shaderProgram);
 #pragma endregion
@@ -68,11 +88,11 @@ int main() {
 	while (!glfwWindowShouldClose(window)) {
 		ProcessInput(window);
 
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// glfwGetTime()으로 현재 시간(sec) 받아옴
-		shaderProgram->SetVec4("customColor", 0.0f, sin(glfwGetTime()) * 0.5f + 0.5f, 0.0f, 1.0f);
+		//shaderProgram->SetVec4("customColor", 0.0f, sin(glfwGetTime()) * 0.5f + 0.5f, 0.0f, 1.0f);
 
 		triangle->Draw();
 
