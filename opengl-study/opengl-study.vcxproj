@@ -163,10 +163,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="src\Common\CustomShader.cpp" />
-    <ClCompile Include="src\Common\CustomShaderProgram.cpp" />
-    <ClCompile Include="src\Common\GLSLFile.cpp" />
-    <ClCompile Include="src\Common\Polygon.cpp" />
+    <ClCompile Include="src\CustomShader.cpp" />
+    <ClCompile Include="src\CustomShaderProgram.cpp" />
+    <ClCompile Include="src\GLSLFile.cpp" />
+    <ClCompile Include="src\Polygon.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\01_Triangle\01_Triangle.frag" />
@@ -182,10 +183,12 @@
     <Text Include="src\02_Shader\glsl_format.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="includes\Common\CustomShader.h" />
-    <ClInclude Include="includes\Common\CustomShaderProgram.h" />
-    <ClInclude Include="includes\Common\GLSLFile.h" />
-    <ClInclude Include="includes\Common\Polygon.h" />
+    <ClInclude Include="includes\CustomShader.h" />
+    <ClInclude Include="includes\CustomShaderProgram.h" />
+    <ClInclude Include="includes\GLSLFile.h" />
+    <ClInclude Include="includes\Polygon.h" />
+    <ClInclude Include="includes\Texture.h" />
+    <ClInclude Include="opengl-study-bin\includes\stb_image.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,5 @@
-#include "Common/Polygon.h"
-#include "Common/CustomShaderProgram.h"
+#include "Polygon.h"
+#include "CustomShaderProgram.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

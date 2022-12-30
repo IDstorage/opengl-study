@@ -1,5 +1,5 @@
-#include "Common/CustomShader.h"
-#include "Common/GLSLFile.h"
+#include "CustomShader.h"
+#include "GLSLFile.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

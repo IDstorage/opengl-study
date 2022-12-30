@@ -22,11 +22,8 @@
     <Filter Include="소스 파일\02_Shader">
       <UniqueIdentifier>{327d9f9d-c902-4da7-b35d-8ae849fda664}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\Common">
-      <UniqueIdentifier>{1c3c4a6a-3492-4e10-ada4-ff7934806567}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Common">
-      <UniqueIdentifier>{d64d0040-4c89-4cad-90fd-196886e7fc5e}</UniqueIdentifier>
+    <Filter Include="소스 파일\03_Texture">
+      <UniqueIdentifier>{ddab6ad5-c78d-4290-b5e6-7054e22ed1c4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -36,23 +33,26 @@
     <ClCompile Include="src\01_Triangle\01_Triangle.cpp">
       <Filter>소스 파일\01_Triangle</Filter>
     </ClCompile>
-    <ClCompile Include="src\Common\CustomShader.cpp">
-      <Filter>소스 파일\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Common\CustomShaderProgram.cpp">
-      <Filter>소스 파일\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Common\GLSLFile.cpp">
-      <Filter>소스 파일\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Common\Polygon.cpp">
-      <Filter>소스 파일\Common</Filter>
-    </ClCompile>
     <ClCompile Include="src\00_Window\00_Window.cpp">
       <Filter>소스 파일\00_Window</Filter>
     </ClCompile>
     <ClCompile Include="src\02_Shader\02_Shader.cpp">
       <Filter>소스 파일\02_Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CustomShader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CustomShaderProgram.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GLSLFile.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Polygon.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -87,17 +87,23 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="includes\Common\CustomShader.h">
-      <Filter>헤더 파일\Common</Filter>
+    <ClInclude Include="includes\CustomShader.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="includes\Common\CustomShaderProgram.h">
-      <Filter>헤더 파일\Common</Filter>
+    <ClInclude Include="includes\CustomShaderProgram.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="includes\Common\GLSLFile.h">
-      <Filter>헤더 파일\Common</Filter>
+    <ClInclude Include="includes\GLSLFile.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="includes\Common\Polygon.h">
-      <Filter>헤더 파일\Common</Filter>
+    <ClInclude Include="includes\Polygon.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-study-bin\includes\stb_image.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Texture.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
