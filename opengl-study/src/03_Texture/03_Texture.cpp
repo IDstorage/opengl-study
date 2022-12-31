@@ -16,7 +16,7 @@ int main() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "03 Texture", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(800, 800, "03 Texture", nullptr, nullptr);
 	if (window == nullptr) {
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
@@ -29,7 +29,7 @@ int main() {
 		return -1;
 	}
 
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, 800, 800);
 	glfwSetFramebufferSizeCallback(window, OnResizeCallback);
 
 #pragma region Shader Compile/Link
