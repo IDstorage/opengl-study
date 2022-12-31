@@ -3,6 +3,7 @@
 #include <memory>
 
 class CustomShaderProgram;
+class Texture;
 
 class Polygon {
 private:
@@ -14,6 +15,9 @@ private:
 
 	// Target shader program
 	std::shared_ptr<CustomShaderProgram> targetShaderProg;
+
+	// Target texture
+	std::shared_ptr<Texture> targetTexture;
 
 	bool shouldWireframe;
 
@@ -30,6 +34,7 @@ public:
 	void SetWireframeMode(bool active);
 
 	void SetTargetShaderProg(const std::shared_ptr<CustomShaderProgram>& prog);
+	void SetTargetTexture(const std::shared_ptr<Texture>& texture);
 
 public:
 	void Draw();

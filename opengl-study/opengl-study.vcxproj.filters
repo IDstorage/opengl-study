@@ -54,6 +54,12 @@
     <ClCompile Include="src\Texture.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="src\03_Texture\03_Texture.cpp">
+      <Filter>소스 파일\03_Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-study-bin\src\stb_image.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\01_Triangle\01_Triangle.frag">
@@ -80,6 +86,12 @@
     <None Include="src\02_Shader\02_Shader_3.frag">
       <Filter>소스 파일\02_Shader</Filter>
     </None>
+    <None Include="src\03_Texture\03_Texture.frag">
+      <Filter>소스 파일\03_Texture</Filter>
+    </None>
+    <None Include="src\03_Texture\03_Texture.vert">
+      <Filter>소스 파일\03_Texture</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\02_Shader\glsl_format.txt">
@@ -99,11 +111,16 @@
     <ClInclude Include="includes\Polygon.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="opengl-study-bin\includes\stb_image.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="includes\Texture.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="opengl-study-bin\includes\stb_image.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\uv_checker.jpg">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>

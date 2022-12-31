@@ -1,5 +1,6 @@
 #include "Polygon.h"
 #include "CustomShaderProgram.h"
+#include "Texture.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -99,10 +100,18 @@ void Polygon::SetTargetShaderProg(const std::shared_ptr<CustomShaderProgram>& pr
 	targetShaderProg = prog;
 }
 
+void Polygon::SetTargetTexture(const std::shared_ptr<Texture>& texture) {
+	targetTexture = texture;
+}
+
 
 void Polygon::Draw() {
 	if (targetShaderProg != nullptr) {
 		targetShaderProg->Use();
+	}
+
+	if (targetTexture != nullptr) {
+		targetTexture->Use();
 	}
 
 	glPolygonMode(GL_FRONT_AND_BACK, shouldWireframe ? GL_LINE : GL_FILL);

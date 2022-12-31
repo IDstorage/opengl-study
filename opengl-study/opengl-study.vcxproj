@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="opengl-study-bin\src\glad.c" />
+    <ClCompile Include="opengl-study-bin\src\stb_image.cpp" />
     <ClCompile Include="src\00_Window\00_Window.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -161,8 +162,9 @@
     </ClCompile>
     <ClCompile Include="src\02_Shader\02_Shader.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="src\03_Texture\03_Texture.cpp" />
     <ClCompile Include="src\CustomShader.cpp" />
     <ClCompile Include="src\CustomShaderProgram.cpp" />
     <ClCompile Include="src\GLSLFile.cpp" />
@@ -178,6 +180,8 @@
     <None Include="src\02_Shader\02_Shader_2.frag" />
     <None Include="src\02_Shader\02_Shader_3.frag" />
     <None Include="src\02_Shader\02_Shader_3.vert" />
+    <None Include="src\03_Texture\03_Texture.frag" />
+    <None Include="src\03_Texture\03_Texture.vert" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\02_Shader\glsl_format.txt" />
@@ -189,6 +193,9 @@
     <ClInclude Include="includes\Polygon.h" />
     <ClInclude Include="includes\Texture.h" />
     <ClInclude Include="opengl-study-bin\includes\stb_image.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\uv_checker.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
