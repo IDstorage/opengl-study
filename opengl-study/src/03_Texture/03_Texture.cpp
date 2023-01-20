@@ -7,6 +7,9 @@
 #include "Polygon.h"
 #include "Texture.h"
 
+#define SCREEN_WIDTH 600
+#define SCREEN_HEIGHT 600
+
 void OnResizeCallback(GLFWwindow*, int, int);
 void ProcessInput(GLFWwindow*);
 
@@ -16,7 +19,7 @@ int main() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(800, 800, "03 Texture", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "03 Texture", nullptr, nullptr);
 	if (window == nullptr) {
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
@@ -29,7 +32,7 @@ int main() {
 		return -1;
 	}
 
-	glViewport(0, 0, 800, 800);
+	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	glfwSetFramebufferSizeCallback(window, OnResizeCallback);
 
 #pragma region Shader Compile/Link
