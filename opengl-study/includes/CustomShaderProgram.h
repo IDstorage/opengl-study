@@ -1,12 +1,14 @@
 #pragma once
 
 #include <string>
+#include <map>
 
 class CustomShader;
 
 class CustomShaderProgram {
 private:
 	unsigned int programObject;
+	std::map<unsigned int, unsigned int> shaders;
 
 public:
 	CustomShaderProgram();

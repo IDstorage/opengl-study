@@ -172,6 +172,7 @@
     <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="03_Texture_2.frag" />
     <None Include="src\01_Triangle\01_Triangle.frag" />
     <None Include="src\01_Triangle\01_Triangle.vert" />
     <None Include="src\01_Triangle\01_Triangle_2.frag" />

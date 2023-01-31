@@ -100,8 +100,10 @@ void Polygon::SetTargetShaderProg(const std::shared_ptr<CustomShaderProgram>& pr
 	targetShaderProg = prog;
 }
 
-void Polygon::SetTargetTexture(const std::shared_ptr<Texture>& texture) {
-	targetTexture = texture;
+
+int Polygon::AddTargetTexture(const std::shared_ptr<Texture>& texture) {
+	targetTextures.emplace_back(texture);
+	return targetTextures.size() - 1;
 }
 
 
@@ -110,8 +112,8 @@ void Polygon::Draw() {
 		targetShaderProg->Use();
 	}
 
-	if (targetTexture != nullptr) {
-		targetTexture->Use();
+	for (auto iter = targetTextures.begin(); iter != targetTextures.end(); ++iter) {
+		iter->get()->Use();
 	}
 
 	glPolygonMode(GL_FRONT_AND_BACK, shouldWireframe ? GL_LINE : GL_FILL);

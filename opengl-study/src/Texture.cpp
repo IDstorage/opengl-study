@@ -25,6 +25,7 @@ void Texture::Load(const std::string& file, bool mipmap) {
 		return;
 	}
 
+	bool isPng = texName.find("png") != std::string::npos;
 	hasMipmap = mipmap;
 
 	glBindTexture(GL_TEXTURE_2D, textureObject);
@@ -36,7 +37,7 @@ void Texture::Load(const std::string& file, bool mipmap) {
 		return;
 	}
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, isPng ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, data);
 	if (hasMipmap) {
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
@@ -44,6 +45,10 @@ void Texture::Load(const std::string& file, bool mipmap) {
 	stbi_image_free(data);
 }
 
+
+void Texture::SetIndex(int index) {
+	targetIndex = index;
+}
 
 void Texture::SetWrapOption(int sOption, int tOption) {
 	glBindTexture(GL_TEXTURE_2D, textureObject);
@@ -70,5 +75,8 @@ void Texture::SetMagnifyFilter(int option) {
 }
 
 void Texture::Use() {
+	if (targetIndex.has_value()) {
+		glActiveTexture(targetIndex.value());
+	}
 	glBindTexture(GL_TEXTURE_2D, textureObject);
 }

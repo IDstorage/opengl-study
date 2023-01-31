@@ -16,14 +16,23 @@ CustomShaderProgram::~CustomShaderProgram() {
 
 bool CustomShaderProgram::Attach(unsigned int shaderType, const std::string& fileName) {
 	auto shader = CustomShader(shaderType);
+
 	shader.LoadShaderFile(fileName);
 	if (!shader.CompileShader()) return false;
+
 	return Attach(shader);
 }
 bool CustomShaderProgram::Attach(const CustomShader& shader) {
 	// shader program 오브젝트에 shader를 추가한다.
 	// 이때 추가할 shader의 오브젝트 id(uint)를 넘겨준다.
 	glAttachShader(programObject, shader.GetObject());
+
+	if (shaders.find(shader.GetType()) == shaders.end()) {
+		shaders.emplace(std::make_pair(shader.GetType(), shader.GetObject()));
+		return true;
+	}
+	shaders[shader.GetType()] = shader.GetObject();
+
 	return true;
 }
 

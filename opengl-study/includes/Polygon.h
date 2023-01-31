@@ -17,7 +17,7 @@ private:
 	std::shared_ptr<CustomShaderProgram> targetShaderProg;
 
 	// Target texture
-	std::shared_ptr<Texture> targetTexture;
+	std::vector<std::shared_ptr<Texture>> targetTextures;
 
 	bool shouldWireframe;
 
@@ -34,7 +34,8 @@ public:
 	void SetWireframeMode(bool active);
 
 	void SetTargetShaderProg(const std::shared_ptr<CustomShaderProgram>& prog);
-	void SetTargetTexture(const std::shared_ptr<Texture>& texture);
+	
+	int AddTargetTexture(const std::shared_ptr<Texture>& texture);
 
 public:
 	void Draw();

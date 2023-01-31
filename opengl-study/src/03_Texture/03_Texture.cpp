@@ -41,7 +41,7 @@ int main() {
 	bool ret = true;
 	{
 		ret &= shaderProgram->Attach(GL_VERTEX_SHADER, "./src/03_Texture/03_Texture.vert");
-		ret &= shaderProgram->Attach(GL_FRAGMENT_SHADER, "./src/03_Texture/03_Texture.frag");
+		ret &= shaderProgram->Attach(GL_FRAGMENT_SHADER, "./src/03_Texture/03_Texture_2.frag");
 	}
 
 	if (!ret) {
@@ -77,11 +77,19 @@ int main() {
 	box->SetTargetShaderProg(shaderProgram);
 
 	auto texture = std::make_shared<Texture>("./resources/uv_checker.jpg");
+	texture->SetIndex(GL_TEXTURE0);
 	texture->SetWrapOption(GL_REPEAT, GL_REPEAT);
 	texture->SetMinifyFilter(GL_LINEAR);
 	texture->SetMagnifyFilter(GL_LINEAR);
 
-	box->SetTargetTexture(texture);
+	auto overlayTexture = std::make_shared<Texture>("./resources/cpplogo.png");
+	overlayTexture->SetIndex(GL_TEXTURE1);
+
+	shaderProgram->SetInt("texture1", 0);
+	shaderProgram->SetInt("texture2", 1);
+
+	box->AddTargetTexture(texture);
+	box->AddTargetTexture(overlayTexture);
 #pragma endregion
 
 

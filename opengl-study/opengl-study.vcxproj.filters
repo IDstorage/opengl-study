@@ -92,6 +92,9 @@
     <None Include="src\03_Texture\03_Texture.vert">
       <Filter>소스 파일\03_Texture</Filter>
     </None>
+    <None Include="03_Texture_2.frag">
+      <Filter>소스 파일\03_Texture</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\02_Shader\glsl_format.txt">
