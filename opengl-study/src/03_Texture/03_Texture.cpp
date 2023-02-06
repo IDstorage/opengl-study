@@ -97,7 +97,44 @@ int main() {
 
 
 #pragma region Rendering Loop
+	/*
+	 * GL_BLEND(블렌딩) 기능을 사용한다. glDisable(...)과 함께 사용한다.
+	 * 
+	 * 옵션으로는
+	 *   - GL_BLEND : 색상 블렌딩
+	 *   - GL_CULL_FACE : 폴리곤 추려내기
+	 *   - GL_DEPTH_TEST : 깊이 테스트
+	 *   - GL_DITHER : 디더링
+	 *   - GL_FOG : OpenGL 안개 모드
+	 *   - GL_LIGHTING : OpenGL 조명
+	 *   - GL_LIGHTx : x번째 OpenGL 조명 (minimum: 8)
+	 *   - GL_POINT_SMOOTH : 점 안티앨리어싱
+	 *   - GL_LINE_SMOOTH : 선 안티앨리어싱
+	 *   - GL_LINE_STIPPLE : 선 스티플링
+	 *   - GL_POLYGON_SMOOTH : 폴리곤 안티앨리어싱
+	 *   - GL_SCISSOR_TEST : 시서링
+	 *   - GL_STENCIL_TEST : 스텐실 테스트
+	 *   - GL_TEXTURE_xD : x차원의 텍스처링 (1 ~ 3)
+	 *   - GL_TEXTURE_CUBE_MAP : 큐브맵 텍스처링
+	 *   - GL_TEXTURE_GEN_x : x에 대한 texgen (x => { S, T, R, Q })
+	 */
 	glEnable(GL_BLEND);
+	/*
+	 * void glBlendFunc(GLenum sfactor, GLenum dfactor);
+	 *  - S색상(새로 기록되는 값)과 D색상(이미 기록되어 있는 값)에 적용할 연산식을 각각 sfactor와 dfactor로 정의.
+	 *  - 기본 연산은 S * sfactor + D * dfactor 이다. (GL_FUNC_ADD)
+	 * 
+	 * GL_SRC_ALPHA : (S.a, S.a, S.a, S.a)
+	 * GL_ONE_MINUS_SRC_ALPHA : (1-S.a, 1-S.a, 1-S.a, 1-S.a)
+	 * 
+	 * ex. 기존에 존재하던 색(D)이 (0, 0, 1, 1)이고 추가되는 색(S)이 (1, 0, 0, 0.4)일 때
+	 * S * sfactor + D * dfactor
+	 *   = S * 0.4 + D * (1 - 0.4)
+	 *   = (1, 0, 0, 0.4) * 0.4 + (0, 0, 1, 1) * (1 - 0.4)
+	 *   = (1 * 0.4 + 0 * 0.6, 0 * 0.4 + 0 * 0.4, 0 * 0.4 + 1 * 0.6, 0.4 * 0.4 + 1 * 0.6)
+	 * 
+	 * 결과적으로 S와 D가 S의 alpha 값에 의해 섞인다.
+	 */
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	while (!glfwWindowShouldClose(window)) {
@@ -114,6 +151,9 @@ int main() {
 		glfwSwapBuffers(window);
 	}
 #pragma endregion
+
+	// TODO: 특정 셰이더에 대해 glEnable/glDisable을 관리할 수 있도록 해야 한다.
+	glDisable(GL_BLEND);
 
 	shaderProgram.reset();                                          
 	box.reset();
