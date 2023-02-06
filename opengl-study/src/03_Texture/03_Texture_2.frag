@@ -7,6 +7,8 @@ in vec2 TexCoord;
 uniform sampler2D texture1;
 uniform sampler2D texture2;
 
+uniform float threshold;
+
 void main() {
-	FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2f) * vec4(VertexColor, 1.0f);
+	FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), threshold);// * vec4(VertexColor, 1.0f);
 }

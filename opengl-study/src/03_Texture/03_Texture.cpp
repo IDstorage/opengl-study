@@ -84,6 +84,9 @@ int main() {
 
 	auto overlayTexture = std::make_shared<Texture>("./resources/cpplogo.png");
 	overlayTexture->SetIndex(GL_TEXTURE1);
+	overlayTexture->SetWrapOption(GL_REPEAT, GL_REPEAT);
+	overlayTexture->SetMinifyFilter(GL_LINEAR);
+	overlayTexture->SetMagnifyFilter(GL_LINEAR);
 
 	shaderProgram->SetInt("texture1", 0);
 	shaderProgram->SetInt("texture2", 1);
@@ -94,11 +97,16 @@ int main() {
 
 
 #pragma region Rendering Loop
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	while (!glfwWindowShouldClose(window)) {
 		ProcessInput(window);
 
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		shaderProgram->SetFloat("threshold", sin(glfwGetTime()) * 0.5f + 0.5f);
 
 		box->Draw();
 

@@ -92,7 +92,7 @@
     <None Include="src\03_Texture\03_Texture.vert">
       <Filter>소스 파일\03_Texture</Filter>
     </None>
-    <None Include="03_Texture_2.frag">
+    <None Include="src\03_Texture\03_Texture_2.frag">
       <Filter>소스 파일\03_Texture</Filter>
     </None>
   </ItemGroup>
@@ -123,6 +123,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\uv_checker.jpg">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resources\cpplogo.png">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

@@ -25,19 +25,25 @@ void Texture::Load(const std::string& file, bool mipmap) {
 		return;
 	}
 
-	bool isPng = texName.find("png") != std::string::npos;
 	hasMipmap = mipmap;
 
 	glBindTexture(GL_TEXTURE_2D, textureObject);
 
 	unsigned char* data = stbi_load(texName.c_str(), &width, &height, &channels, 0);
+	// channels
+	// 1 : grey
+	// 2 : grey, alpha
+	// 3 : red, green, blue
+	// 4 : red, green, blue, alpha
+	bool hasAlpha = channels == 2 || channels == 4;
 
 	if (!data) {
 		std::cout << "Failed to load texture" << std::endl << stbi_failure_reason() << std::endl;
 		return;
 	}
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, isPng ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, data);
+	auto type = hasAlpha ? GL_RGBA : GL_RGB;
+	glTexImage2D(GL_TEXTURE_2D, 0, type, width, height, 0, type, GL_UNSIGNED_BYTE, data);
 	if (hasMipmap) {
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}

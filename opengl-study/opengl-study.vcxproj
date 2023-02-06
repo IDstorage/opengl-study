@@ -172,7 +172,6 @@
     <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="03_Texture_2.frag" />
     <None Include="src\01_Triangle\01_Triangle.frag" />
     <None Include="src\01_Triangle\01_Triangle.vert" />
     <None Include="src\01_Triangle\01_Triangle_2.frag" />
@@ -183,6 +182,7 @@
     <None Include="src\02_Shader\02_Shader_3.vert" />
     <None Include="src\03_Texture\03_Texture.frag" />
     <None Include="src\03_Texture\03_Texture.vert" />
+    <None Include="src\03_Texture\03_Texture_2.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\02_Shader\glsl_format.txt" />
@@ -196,6 +196,7 @@
     <ClInclude Include="opengl-study-bin\includes\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="resources\cpplogo.png" />
     <Image Include="resources\uv_checker.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
