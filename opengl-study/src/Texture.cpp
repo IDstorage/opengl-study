@@ -29,6 +29,10 @@ void Texture::Load(const std::string& file, bool mipmap) {
 
 	glBindTexture(GL_TEXTURE_2D, textureObject);
 
+	// OpenGL이 이미지의 (0, 0)을 아래로 인식해서 뒤집혀 나옴.
+	// 실제 이미지의 (0, 0)은 좌상단이기 때문에 불러올 때 뒤집을 수 있게 함.
+	stbi_set_flip_vertically_on_load(true);
+
 	unsigned char* data = stbi_load(texName.c_str(), &width, &height, &channels, 0);
 	// channels
 	// 1 : grey
