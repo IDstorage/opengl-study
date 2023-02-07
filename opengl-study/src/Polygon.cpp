@@ -1,6 +1,7 @@
 #include "Polygon.h"
 #include "CustomShaderProgram.h"
 #include "Texture.h"
+#include "Transfrom.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -104,6 +105,11 @@ void Polygon::SetTargetShaderProg(const std::shared_ptr<CustomShaderProgram>& pr
 int Polygon::AddTargetTexture(const std::shared_ptr<Texture>& texture) {
 	targetTextures.emplace_back(texture);
 	return targetTextures.size() - 1;
+}
+
+
+const std::unique_ptr<Transform>& Polygon::GetTransform() const {
+	return transform;
 }
 
 

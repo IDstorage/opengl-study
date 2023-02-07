@@ -4,6 +4,7 @@
 
 class CustomShaderProgram;
 class Texture;
+class Transform;
 
 class Polygon {
 private:
@@ -21,6 +22,9 @@ private:
 
 	bool shouldWireframe;
 
+private:
+	std::unique_ptr<Transform> transform;
+
 public:
 	Polygon();
 	~Polygon();
@@ -36,6 +40,9 @@ public:
 	void SetTargetShaderProg(const std::shared_ptr<CustomShaderProgram>& prog);
 	
 	int AddTargetTexture(const std::shared_ptr<Texture>& texture);
+
+public:
+	const std::unique_ptr<Transform>& GetTransform() const;
 
 public:
 	void Draw();

@@ -25,6 +25,9 @@
     <Filter Include="소스 파일\03_Texture">
       <UniqueIdentifier>{ddab6ad5-c78d-4290-b5e6-7054e22ed1c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\04_Transformation">
+      <UniqueIdentifier>{9ceeb64d-f59b-40a8-96ee-136e3f22163a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="opengl-study-bin\src\glad.c">
@@ -59,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="opengl-study-bin\src\stb_image.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\04_Transformation\04_Transformation.cpp">
+      <Filter>소스 파일\04_Transformation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

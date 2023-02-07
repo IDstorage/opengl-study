@@ -164,7 +164,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="src\03_Texture\03_Texture.cpp" />
+    <ClCompile Include="src\03_Texture\03_Texture.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\04_Transformation\04_Transformation.cpp" />
     <ClCompile Include="src\CustomShader.cpp" />
     <ClCompile Include="src\CustomShaderProgram.cpp" />
     <ClCompile Include="src\GLSLFile.cpp" />
