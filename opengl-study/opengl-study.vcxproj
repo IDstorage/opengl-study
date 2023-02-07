@@ -187,11 +187,14 @@
     <None Include="src\03_Texture\03_texture.frag" />
     <None Include="src\03_Texture\03_texture.vert" />
     <None Include="src\03_Texture\03_texture_2.frag" />
+    <None Include="src\04_Transformation\04_transformation.frag" />
+    <None Include="src\04_Transformation\04_transformation.vert" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\02_Shader\glsl_format.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="includes\glm_required.h" />
     <ClInclude Include="includes\shader.h" />
     <ClInclude Include="includes\shaderprogram.h" />
     <ClInclude Include="includes\glsl_file.h" />

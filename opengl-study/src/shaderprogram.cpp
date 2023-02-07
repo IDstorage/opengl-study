@@ -95,6 +95,16 @@ bool ShaderProgram::setFloat(const std::string& name, float value) {
 	return true;
 }
 
+bool ShaderProgram::setVec3(const std::string& name, const glm::vec3& v3) {
+	int location = glGetUniformLocation(program_object, name.c_str());
+	if (location == -1) return false;
+
+	glUseProgram(program_object);
+	glUniform3fv(location, 1, glm::value_ptr(v3));
+
+	return true;
+}
+
 bool ShaderProgram::setVec3(const std::string& name, float x, float y, float z) {
 	int location = glGetUniformLocation(program_object, name.c_str());
 	if (location == -1) return false;
@@ -105,12 +115,32 @@ bool ShaderProgram::setVec3(const std::string& name, float x, float y, float z) 
 	return true;
 }
 
+bool ShaderProgram::setVec4(const std::string& name, const glm::vec4& v4) {
+	int location = glGetUniformLocation(program_object, name.c_str());
+	if (location == -1) return false;
+
+	glUseProgram(program_object);
+	glUniform4fv(location, 1, glm::value_ptr(v4));
+
+	return true;
+}
+
 bool ShaderProgram::setVec4(const std::string& name, float x, float y, float z, float w) {
 	int location = glGetUniformLocation(program_object, name.c_str());
 	if (location == -1) return false;
 
 	glUseProgram(program_object);
 	glUniform4f(location, x, y, z, w);
+
+	return true;
+}
+
+bool ShaderProgram::setMat4(const std::string& name, const glm::mat4& m) {
+	int location = glGetUniformLocation(program_object, name.c_str());
+	if (location == -1) return false;
+
+	glUseProgram(program_object);
+	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(m));
 
 	return true;
 }

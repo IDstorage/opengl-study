@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "glm_required.h"
+
 #include "shaderprogram.h"
 #include "polygon.h"
 #include "texture.h"
@@ -40,8 +42,8 @@ int main() {
 
 	bool ret = true;
 	{
-		ret &= shader_program->attach(GL_VERTEX_SHADER, "./src/03_Texture/03_texture.vert");
-		ret &= shader_program->attach(GL_FRAGMENT_SHADER, "./src/03_Texture/03_texture_2.frag");
+		ret &= shader_program->attach(GL_VERTEX_SHADER, "./src/04_Transformation/04_transformation.vert");
+		ret &= shader_program->attach(GL_FRAGMENT_SHADER, "./src/04_Transformation/04_transformation.frag");
 	}
 
 	if (!ret) {
@@ -60,19 +62,18 @@ int main() {
 #pragma region Create polygon
 	auto box = std::make_unique<ids::Polygon>();
 	box->setVertices({
-		0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-		-0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f
+		0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+		0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+		-0.5f, 0.5f, 0.0f, 0.0f, 1.0f
 		});
 	box->setIndices({
 		2, 0, 3,
 		2, 1, 0
 		});
 
-	box->setAttributes(0, 3, GL_FLOAT, false, 8 * sizeof(float), NULL);
-	box->setAttributes(1, 3, GL_FLOAT, false, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	box->setAttributes(2, 2, GL_FLOAT, false, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	box->setAttributes(0, 3, GL_FLOAT, false, 5 * sizeof(float), NULL);
+	box->setAttributes(1, 2, GL_FLOAT, false, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
 	box->setTargetShaderProg(shader_program);
 
@@ -96,6 +97,32 @@ int main() {
 #pragma endregion
 
 
+#pragma region GLM
+	// glm 0.9.9 이상부터 행렬은 단위 행렬이 아닌 0으로 초기화된다.
+	// 단위 행렬을 위해서는 생성자에 1.0을 전달한다.
+	glm::mat4 tr1(1.0f);
+	// 이동행렬
+	tr1 = glm::translate(tr1, glm::vec3(1.0f, 1.0f, 0.0f));
+	/*
+	 * 회전행렬
+	 * 인자로 radian 값과 축을 전달. 축은 정규화되어 있어야 한다.
+	 */
+	tr1 = glm::rotate(tr1, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	tr1 = glm::scale(tr1, glm::vec3(0.5f, 0.5f, 0.5f));
+	
+	glm::vec4 v1(1.0, 0.0, 0.0, 1.0);
+	// OpenGL은 오른손 좌표계이며 열벡터를 사용하기 때문에 TRS이다. (T*R*S*v)
+	v1 = tr1 * v1;
+
+	glm::mat4 tr2(1.0f);
+	//tr2 = glm::translate(tr2, glm::vec3(0.0f, 0.5f, 0.0f));
+	//tr2 = glm::rotate(tr2, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	//tr2 = glm::scale(tr2, glm::vec3(0.5f, 1.0f, 0.5f));
+
+	shader_program->setMat4("transform", tr2);
+#pragma endregion
+
+
 #pragma region Rendering Loop
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -107,6 +134,10 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shader_program->setFloat("threshold", sin(glfwGetTime()) * 0.5f + 0.5f);
+		
+		glm::mat4 tr3 = glm::rotate(tr2, glm::radians(static_cast<float>(glfwGetTime()) * 360.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		tr3 = glm::scale(tr3, glm::vec3(sin(glfwGetTime()) * 0.5f + 0.5f, cos(glfwGetTime()) * 0.5f + 0.5f, 1.0f));
+		shader_program->setMat4("transform", tr3);
 
 		box->draw();
 

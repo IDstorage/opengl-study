@@ -104,6 +104,12 @@
     <None Include="src\03_Texture\03_texture_2.frag">
       <Filter>소스 파일\03_Texture</Filter>
     </None>
+    <None Include="src\04_Transformation\04_transformation.vert">
+      <Filter>소스 파일\04_Transformation</Filter>
+    </None>
+    <None Include="src\04_Transformation\04_transformation.frag">
+      <Filter>소스 파일\04_Transformation</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\02_Shader\glsl_format.txt">
@@ -130,6 +136,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="includes\transform.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\glm_required.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
