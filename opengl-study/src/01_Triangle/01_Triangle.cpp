@@ -3,13 +3,13 @@
 
 #include <iostream>
 
-#include "CustomShaderProgram.h"
-#include "Polygon.h"
+#include "shaderprogram.h"
+#include "polygon.h"
 
 void OnResizeCallback(GLFWwindow*, int, int);
 void ProcessInput(GLFWwindow*);
 
-bool isWFKeyPressed = false;
+bool is_wfkey_pressed = false;
 
 int main() {
 	glfwInit();
@@ -34,29 +34,29 @@ int main() {
 	glfwSetFramebufferSizeCallback(window, OnResizeCallback);
 
 #pragma region Shader Compile/Link
-	auto shaderProgram = std::make_shared<CustomShaderProgram>();
-	bool ret = shaderProgram->Attach(GL_VERTEX_SHADER, "./src/01_Triangle/01_Triangle.vert");
-	ret &= shaderProgram->Attach(GL_FRAGMENT_SHADER, "./src/01_Triangle/01_Triangle.frag");
+	auto shader_program = std::make_shared<ids::ShaderProgram>();
+	bool ret = shader_program->attach(GL_VERTEX_SHADER, "./src/01_Triangle/01_triangle.vert");
+	ret &= shader_program->attach(GL_FRAGMENT_SHADER, "./src/01_Triangle/01_triangle.frag");
 	if (!ret) {
 		glfwTerminate();
 		return -1;
 	}
 	
-	ret = shaderProgram->Link();
+	ret = shader_program->link();
 	if (!ret) {
 		glfwTerminate();
 		return -1;
 	}
 
-	auto shaderProgram2 = std::make_shared<CustomShaderProgram>();
-	ret = shaderProgram2->Attach(GL_VERTEX_SHADER, "./src/01_Triangle/01_Triangle.vert");
-	ret &= shaderProgram2->Attach(GL_FRAGMENT_SHADER, "./src/01_Triangle/01_Triangle_2.frag");
+	auto shader_program2 = std::make_shared<ids::ShaderProgram>();
+	ret = shader_program2->attach(GL_VERTEX_SHADER, "./src/01_Triangle/01_triangle.vert");
+	ret &= shader_program2->attach(GL_FRAGMENT_SHADER, "./src/01_Triangle/01_triangle_2.frag");
 	if (!ret) {
 		glfwTerminate();
 		return -1;
 	}
 
-	ret = shaderProgram2->Link();
+	ret = shader_program2->link();
 	if (!ret) {
 		glfwTerminate();
 		return -1;
@@ -71,30 +71,30 @@ int main() {
 	 * 이 NDC는 glViewport 함수에 전달한 데이터(픽셀 수)를 바탕으로 Screen-space coordinates(화면 좌표)로 변환된다. (Viewport transform, 뷰포트 변환)
 	 * 그렇게 변환된 screen-space coordinates는 fragment로 변환되어 fragment shader의 입력으로 전달된다.
 	 */
-	auto leftTriangle = std::make_unique<Polygon>();
-	leftTriangle->SetVertices({
+	auto left_triangle = std::make_unique<ids::Polygon>();
+	left_triangle->setVertices({
 		-0.525f, 0.525f, 0.0f,	// left-top
 		-0.525f, -0.475f, 0.0f,	// left-bottom
 		0.475f, 0.525f, 0.0f		// right-top
 	});
-	leftTriangle->SetIndices({
+	left_triangle->setIndices({
 		//0, 1, 2		// Counter-Clockwise
 		0, 2, 1	// Clockwise
 	});
-	leftTriangle->SetTargetShaderProg(shaderProgram);
+	left_triangle->setTargetShaderProg(shader_program);
 
-	auto rightTriangle = std::make_unique<Polygon>();
-	rightTriangle->SetVertices({
+	auto right_triangle = std::make_unique<ids::Polygon>();
+	right_triangle->setVertices({
 		0.525f, 0.475f, 0.0f,	// right-top
 		-0.475f, -0.525f, 0.0f,	// left-bottom
 		0.525f, -0.525f, 0.0f		// right-bottom
 	});
-	rightTriangle->SetIndices({
+	right_triangle->setIndices({
 		0, 1, 2		// Counter-Clockwise
 		//0, 2, 1	// Clockwise
 	});
-	rightTriangle->SetWireframeMode(true);
-	rightTriangle->SetTargetShaderProg(shaderProgram2);
+	right_triangle->setWireframeMode(true);
+	right_triangle->setTargetShaderProg(shader_program2);
 
 #pragma region Rendering Loop
 	while (!glfwWindowShouldClose(window)) {
@@ -103,22 +103,22 @@ int main() {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		leftTriangle->SetWireframeMode(isWFKeyPressed);
-		leftTriangle->Draw();
+		left_triangle->setWireframeMode(is_wfkey_pressed);
+		left_triangle->draw();
 
-		rightTriangle->SetWireframeMode(!isWFKeyPressed);
-		rightTriangle->Draw();
+		right_triangle->setWireframeMode(!is_wfkey_pressed);
+		right_triangle->draw();
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
 #pragma endregion
 
-	shaderProgram.reset();
-	shaderProgram2.reset();
+	shader_program.reset();
+	shader_program2.reset();
 
-	leftTriangle.reset();
-	rightTriangle.reset();
+	left_triangle.reset();
+	right_triangle.reset();
 
 	glfwTerminate();
 	return 0;
@@ -133,5 +133,5 @@ void ProcessInput(GLFWwindow* window) {
 		glfwSetWindowShouldClose(window, true);
 	}
 
-	isWFKeyPressed = glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS;
+	is_wfkey_pressed = glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS;
 }

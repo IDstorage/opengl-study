@@ -63,12 +63,12 @@ int main() {
 	// 창 사이즈 변경 콜백
 	glfwSetFramebufferSizeCallback(window, OnResizeCallback);
 
-	std::mt19937 randomEngine{ static_cast<unsigned int>(time(0)) };
+	std::mt19937 random_engine{ static_cast<unsigned int>(time(0)) };
 	std::uniform_real_distribution<> distribution(0.0, 1.0);
 
-	double r = distribution(randomEngine);
-	double g = distribution(randomEngine);
-	double b = distribution(randomEngine);
+	double r = distribution(random_engine);
+	double g = distribution(random_engine);
+	double b = distribution(random_engine);
 
 	// 메인 루프
 	while (!glfwWindowShouldClose(window)) { // 종료해야 하는지 확인

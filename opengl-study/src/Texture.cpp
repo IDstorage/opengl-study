@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Texture.h"
+#include "texture.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -8,32 +8,33 @@
 
 #include "stb_image.h"
 
+using namespace ids;
 
-Texture::Texture(const std::string& fileName, bool mipmap) : texName(fileName), hasMipmap(mipmap) {
-	glGenTextures(1, &textureObject);
+Texture::Texture(const std::string& file_name, bool mipmap) : tex_name(file_name), has_mipmap(mipmap) {
+	glGenTextures(1, &texture_object);
 
-	Load();
+	load();
 }
 
 
-void Texture::Load(const std::string& file, bool mipmap) {
+void Texture::load(const std::string& file, bool mipmap) {
 	if (!file.empty()) {
-		texName = file;
+		tex_name = file;
 	}
 
-	if (texName.empty()) {
+	if (tex_name.empty()) {
 		return;
 	}
 
-	hasMipmap = mipmap;
+	has_mipmap = mipmap;
 
-	glBindTexture(GL_TEXTURE_2D, textureObject);
+	glBindTexture(GL_TEXTURE_2D, texture_object);
 
 	// OpenGL이 이미지의 (0, 0)을 아래로 인식해서 뒤집혀 나옴.
 	// 실제 이미지의 (0, 0)은 좌상단이기 때문에 불러올 때 뒤집을 수 있게 함.
 	stbi_set_flip_vertically_on_load(true);
 
-	unsigned char* data = stbi_load(texName.c_str(), &width, &height, &channels, 0);
+	unsigned char* data = stbi_load(tex_name.c_str(), &width, &height, &channels, 0);
 	// channels
 	// 1 : grey
 	// 2 : grey, alpha
@@ -48,7 +49,7 @@ void Texture::Load(const std::string& file, bool mipmap) {
 
 	auto type = hasAlpha ? GL_RGBA : GL_RGB;
 	glTexImage2D(GL_TEXTURE_2D, 0, type, width, height, 0, type, GL_UNSIGNED_BYTE, data);
-	if (hasMipmap) {
+	if (has_mipmap) {
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 
@@ -56,37 +57,37 @@ void Texture::Load(const std::string& file, bool mipmap) {
 }
 
 
-void Texture::SetIndex(int index) {
-	targetIndex = index;
+void Texture::setIndex(int index) {
+	target_index = index;
 }
 
-void Texture::SetWrapOption(int sOption, int tOption) {
-	glBindTexture(GL_TEXTURE_2D, textureObject);
+void Texture::setWrapOption(int s_option, int t_option) {
+	glBindTexture(GL_TEXTURE_2D, texture_object);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, sOption);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, tOption);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, s_option);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, t_option);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Texture::SetMinifyFilter(int option) {
-	glBindTexture(GL_TEXTURE_2D, textureObject);
+void Texture::setMinifyFilter(int option) {
+	glBindTexture(GL_TEXTURE_2D, texture_object);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, option);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
-void Texture::SetMagnifyFilter(int option) {
-	glBindTexture(GL_TEXTURE_2D, textureObject);
+void Texture::setMagnifyFilter(int option) {
+	glBindTexture(GL_TEXTURE_2D, texture_object);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, option);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Texture::Use() {
-	if (targetIndex.has_value()) {
-		glActiveTexture(targetIndex.value());
+void Texture::use() {
+	if (target_index.has_value()) {
+		glActiveTexture(target_index.value());
 	}
-	glBindTexture(GL_TEXTURE_2D, textureObject);
+	glBindTexture(GL_TEXTURE_2D, texture_object);
 }

@@ -3,9 +3,9 @@
 
 #include <iostream>
 
-#include "CustomShaderProgram.h"
-#include "Polygon.h"
-#include "Texture.h"
+#include "shaderprogram.h"
+#include "polygon.h"
+#include "texture.h"
 
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 600
@@ -36,12 +36,12 @@ int main() {
 	glfwSetFramebufferSizeCallback(window, OnResizeCallback);
 
 #pragma region Shader Compile/Link
-	auto shaderProgram = std::make_shared<CustomShaderProgram>();
+	auto shader_program = std::make_shared<ids::ShaderProgram>();
 
 	bool ret = true;
 	{
-		ret &= shaderProgram->Attach(GL_VERTEX_SHADER, "./src/03_Texture/03_Texture.vert");
-		ret &= shaderProgram->Attach(GL_FRAGMENT_SHADER, "./src/03_Texture/03_Texture_2.frag");
+		ret &= shader_program->attach(GL_VERTEX_SHADER, "./src/03_Texture/03_texture.vert");
+		ret &= shader_program->attach(GL_FRAGMENT_SHADER, "./src/03_Texture/03_texture_2.frag");
 	}
 
 	if (!ret) {
@@ -49,7 +49,7 @@ int main() {
 		return -1;
 	}
 
-	ret = shaderProgram->Link();
+	ret = shader_program->link();
 	if (!ret) {
 		glfwTerminate();
 		return -1;
@@ -58,41 +58,41 @@ int main() {
 
 
 #pragma region Create polygon
-	auto box = std::make_unique<Polygon>();
-	box->SetVertices({
+	auto box = std::make_unique<ids::Polygon>();
+	box->setVertices({
 		0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
 		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
 		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
 		-0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f
 		});
-	box->SetIndices({
+	box->setIndices({
 		2, 0, 3,
 		2, 1, 0
 		});
 
-	box->SetAttributes(0, 3, GL_FLOAT, false, 8 * sizeof(float), NULL);
-	box->SetAttributes(1, 3, GL_FLOAT, false, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	box->SetAttributes(2, 2, GL_FLOAT, false, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	box->setAttributes(0, 3, GL_FLOAT, false, 8 * sizeof(float), NULL);
+	box->setAttributes(1, 3, GL_FLOAT, false, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	box->setAttributes(2, 2, GL_FLOAT, false, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 
-	box->SetTargetShaderProg(shaderProgram);
+	box->setTargetShaderProg(shader_program);
 
-	auto texture = std::make_shared<Texture>("./resources/uv_checker.jpg");
-	texture->SetIndex(GL_TEXTURE0);
-	texture->SetWrapOption(GL_REPEAT, GL_REPEAT);
-	texture->SetMinifyFilter(GL_LINEAR);
-	texture->SetMagnifyFilter(GL_LINEAR);
+	auto texture = std::make_shared<ids::Texture>("./resources/uv_checker.jpg");
+	texture->setIndex(GL_TEXTURE0);
+	texture->setWrapOption(GL_REPEAT, GL_REPEAT);
+	texture->setMinifyFilter(GL_LINEAR);
+	texture->setMagnifyFilter(GL_LINEAR);
 
-	auto overlayTexture = std::make_shared<Texture>("./resources/cpplogo.png");
-	overlayTexture->SetIndex(GL_TEXTURE1);
-	overlayTexture->SetWrapOption(GL_REPEAT, GL_REPEAT);
-	overlayTexture->SetMinifyFilter(GL_LINEAR);
-	overlayTexture->SetMagnifyFilter(GL_LINEAR);
+	auto overlay_texture = std::make_shared<ids::Texture>("./resources/cpplogo.png");
+	overlay_texture->setIndex(GL_TEXTURE1);
+	overlay_texture->setWrapOption(GL_REPEAT, GL_REPEAT);
+	overlay_texture->setMinifyFilter(GL_LINEAR);
+	overlay_texture->setMagnifyFilter(GL_LINEAR);
 
-	shaderProgram->SetInt("texture1", 0);
-	shaderProgram->SetInt("texture2", 1);
+	shader_program->setInt("texture1", 0);
+	shader_program->setInt("texture2", 1);
 
-	box->AddTargetTexture(texture);
-	box->AddTargetTexture(overlayTexture);
+	box->addTargetTexture(texture);
+	box->addTargetTexture(overlay_texture);
 #pragma endregion
 
 
@@ -106,9 +106,9 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		shaderProgram->SetFloat("threshold", sin(glfwGetTime()) * 0.5f + 0.5f);
+		shader_program->setFloat("threshold", sin(glfwGetTime()) * 0.5f + 0.5f);
 
-		box->Draw();
+		box->draw();
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);
@@ -117,9 +117,10 @@ int main() {
 
 	glDisable(GL_BLEND);
 
-	shaderProgram.reset();
+	shader_program.reset();
 	box.reset();
 	texture.reset();
+	overlay_texture.reset();
 
 	glfwTerminate();
 	return 0;

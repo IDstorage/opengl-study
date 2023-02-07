@@ -4,19 +4,24 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-class Transform {
-private:
-	glm::vec4 position;
-	glm::vec4 eulerAngles;
-	glm::vec4 scale;
+namespace ids {
+	class Transform {
+	private:
+		glm::mat4 transform;
 
-public:
-	void Translate(float x, float y, float z);
-	void Translate(glm::vec3 v);
+	public:
+		void translate(float x, float y, float z);
+		void translate(glm::vec3 v);
 
-	void RotateEuler(float x, float y, float z);
-	void RotateEuler(glm::vec3 euler);
+		void rotate(float x, float y, float z);
+		void rotate(glm::vec3 euler);
 
-	void Scale(float x, float y, float z);
-	void Scale(glm::vec3 s);
-};
+		void scale(float x, float y, float z);
+		void scale(glm::vec3 s);
+
+	public:
+		glm::vec3 getPosition() const;
+		glm::vec3 getEulerAngles() const;
+		glm::vec3 getLocalScale() const;
+	};
+}

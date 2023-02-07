@@ -153,49 +153,51 @@
   <ItemGroup>
     <ClCompile Include="opengl-study-bin\src\glad.c" />
     <ClCompile Include="opengl-study-bin\src\stb_image.cpp" />
-    <ClCompile Include="src\00_Window\00_Window.cpp">
+    <ClCompile Include="src\00_Window\00_window.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="src\01_Triangle\01_Triangle.cpp">
+    <ClCompile Include="src\01_Triangle\01_triangle.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="src\02_Shader\02_Shader.cpp">
+    <ClCompile Include="src\02_Shader\02_shader.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="src\03_Texture\03_Texture.cpp">
+    <ClCompile Include="src\03_Texture\03_texture.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="src\04_Transformation\04_Transformation.cpp" />
-    <ClCompile Include="src\CustomShader.cpp" />
-    <ClCompile Include="src\CustomShaderProgram.cpp" />
-    <ClCompile Include="src\GLSLFile.cpp" />
-    <ClCompile Include="src\Polygon.cpp" />
-    <ClCompile Include="src\Texture.cpp" />
+    <ClCompile Include="src\04_Transformation\04_transformation.cpp" />
+    <ClCompile Include="src\shader.cpp" />
+    <ClCompile Include="src\shaderprogram.cpp" />
+    <ClCompile Include="src\glsl_file.cpp" />
+    <ClCompile Include="src\polygon.cpp" />
+    <ClCompile Include="src\texture.cpp" />
+    <ClCompile Include="src\transform.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\01_Triangle\01_Triangle.frag" />
-    <None Include="src\01_Triangle\01_Triangle.vert" />
-    <None Include="src\01_Triangle\01_Triangle_2.frag" />
-    <None Include="src\02_Shader\02_Shader.frag" />
-    <None Include="src\02_Shader\02_Shader.vert" />
-    <None Include="src\02_Shader\02_Shader_2.frag" />
-    <None Include="src\02_Shader\02_Shader_3.frag" />
+    <None Include="src\01_Triangle\01_triangle.frag" />
+    <None Include="src\01_Triangle\01_triangle.vert" />
+    <None Include="src\01_Triangle\01_triangle_2.frag" />
+    <None Include="src\02_Shader\02_shader.frag" />
+    <None Include="src\02_Shader\02_shader.vert" />
+    <None Include="src\02_Shader\02_shader_2.frag" />
+    <None Include="src\02_Shader\02_shader_3.frag" />
     <None Include="src\02_Shader\02_Shader_3.vert" />
-    <None Include="src\03_Texture\03_Texture.frag" />
-    <None Include="src\03_Texture\03_Texture.vert" />
-    <None Include="src\03_Texture\03_Texture_2.frag" />
+    <None Include="src\03_Texture\03_texture.frag" />
+    <None Include="src\03_Texture\03_texture.vert" />
+    <None Include="src\03_Texture\03_texture_2.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\02_Shader\glsl_format.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="includes\CustomShader.h" />
-    <ClInclude Include="includes\CustomShaderProgram.h" />
-    <ClInclude Include="includes\GLSLFile.h" />
-    <ClInclude Include="includes\Polygon.h" />
-    <ClInclude Include="includes\Texture.h" />
+    <ClInclude Include="includes\shader.h" />
+    <ClInclude Include="includes\shaderprogram.h" />
+    <ClInclude Include="includes\glsl_file.h" />
+    <ClInclude Include="includes\polygon.h" />
+    <ClInclude Include="includes\texture.h" />
+    <ClInclude Include="includes\transform.h" />
     <ClInclude Include="opengl-study-bin\includes\stb_image.h" />
   </ItemGroup>
   <ItemGroup>

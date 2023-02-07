@@ -1,12 +1,14 @@
-#include "Polygon.h"
-#include "CustomShaderProgram.h"
-#include "Texture.h"
-#include "Transfrom.h"
+#include "polygon.h"
+#include "shaderprogram.h"
+#include "texture.h"
+#include "transform.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-Polygon::Polygon() : shouldWireframe(false) {
+using namespace ids;
+
+Polygon::Polygon() : should_wireframe(false) {
 	glGenBuffers(1, &vbo); // 고유한 버퍼 ID를 생성
 	glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &ebo);
@@ -24,7 +26,7 @@ Polygon::~Polygon() {
  *  - OpenGL이 어떻게 메모리를 해석할 것인지 구성
  *  - 데이터를 어떻게 그래픽 카드에 전달할 것인지 명시
  */
-void Polygon::SetVertices(const std::initializer_list<float>& verts) {
+void Polygon::setVertices(const std::initializer_list<float>& verts) {
 	vertices = verts;
 
 	auto vertsArray = vertices.data();
@@ -50,7 +52,7 @@ void Polygon::SetVertices(const std::initializer_list<float>& verts) {
 	glBindVertexArray(0);
 }
 
-void Polygon::SetIndices(const std::initializer_list<int>& ind) {
+void Polygon::setIndices(const std::initializer_list<int>& ind) {
 	indices = ind;
 
 	auto indArray = indices.data();
@@ -63,7 +65,7 @@ void Polygon::SetIndices(const std::initializer_list<int>& ind) {
 	glBindVertexArray(0);
 }
 
-void Polygon::SetAttributes(int location, int count, unsigned int type, bool normalize, int size, void* offset) {
+void Polygon::setAttributes(int location, int count, unsigned int type, bool normalize, int size, void* offset) {
 	glBindVertexArray(vao);
 
 	/*
@@ -93,36 +95,36 @@ void Polygon::SetAttributes(int location, int count, unsigned int type, bool nor
 	glBindVertexArray(0);
 }
 
-void Polygon::SetWireframeMode(bool active) {
-	shouldWireframe = active;
+void Polygon::setWireframeMode(bool active) {
+	should_wireframe = active;
 }
 
-void Polygon::SetTargetShaderProg(const std::shared_ptr<CustomShaderProgram>& prog) {
-	targetShaderProg = prog;
-}
-
-
-int Polygon::AddTargetTexture(const std::shared_ptr<Texture>& texture) {
-	targetTextures.emplace_back(texture);
-	return targetTextures.size() - 1;
+void Polygon::setTargetShaderProg(const std::shared_ptr<ShaderProgram>& prog) {
+	target_shaderprog = prog;
 }
 
 
-const std::unique_ptr<Transform>& Polygon::GetTransform() const {
+int Polygon::addTargetTexture(const std::shared_ptr<Texture>& texture) {
+	target_textures.emplace_back(texture);
+	return target_textures.size() - 1;
+}
+
+
+const std::unique_ptr<Transform>& Polygon::getTransform() const {
 	return transform;
 }
 
 
-void Polygon::Draw() {
-	if (targetShaderProg != nullptr) {
-		targetShaderProg->Use();
+void Polygon::draw() {
+	if (target_shaderprog != nullptr) {
+		target_shaderprog->use();
 	}
 
-	for (auto iter = targetTextures.begin(); iter != targetTextures.end(); ++iter) {
-		iter->get()->Use();
+	for (auto iter = target_textures.begin(); iter != target_textures.end(); ++iter) {
+		iter->get()->use();
 	}
 
-	glPolygonMode(GL_FRONT_AND_BACK, shouldWireframe ? GL_LINE : GL_FILL);
+	glPolygonMode(GL_FRONT_AND_BACK, should_wireframe ? GL_LINE : GL_FILL);
 
 	glBindVertexArray(vao);
 	// glDrawArrays(GL_TRIANGLES, 0, 3);

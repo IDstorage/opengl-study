@@ -13,11 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\01_Triangle">
-      <UniqueIdentifier>{e1c30674-31e9-4b52-90f8-4184cebcce41}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\00_Window">
       <UniqueIdentifier>{ba2c0b94-c70e-4511-8dca-f287ea1a6a55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01_Triangle">
+      <UniqueIdentifier>{e1c30674-31e9-4b52-90f8-4184cebcce41}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\02_Shader">
       <UniqueIdentifier>{327d9f9d-c902-4da7-b35d-8ae849fda664}</UniqueIdentifier>
@@ -33,72 +33,75 @@
     <ClCompile Include="opengl-study-bin\src\glad.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\01_Triangle\01_Triangle.cpp">
+    <ClCompile Include="src\01_Triangle\01_triangle.cpp">
       <Filter>소스 파일\01_Triangle</Filter>
     </ClCompile>
-    <ClCompile Include="src\00_Window\00_Window.cpp">
+    <ClCompile Include="src\00_Window\00_window.cpp">
       <Filter>소스 파일\00_Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\02_Shader\02_Shader.cpp">
+    <ClCompile Include="src\02_Shader\02_shader.cpp">
       <Filter>소스 파일\02_Shader</Filter>
     </ClCompile>
-    <ClCompile Include="src\CustomShader.cpp">
+    <ClCompile Include="src\shader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\CustomShaderProgram.cpp">
+    <ClCompile Include="src\shaderprogram.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\GLSLFile.cpp">
+    <ClCompile Include="src\glsl_file.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\Polygon.cpp">
+    <ClCompile Include="src\polygon.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\Texture.cpp">
+    <ClCompile Include="src\texture.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\03_Texture\03_Texture.cpp">
+    <ClCompile Include="src\03_Texture\03_texture.cpp">
       <Filter>소스 파일\03_Texture</Filter>
     </ClCompile>
     <ClCompile Include="opengl-study-bin\src\stb_image.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\04_Transformation\04_Transformation.cpp">
+    <ClCompile Include="src\04_Transformation\04_transformation.cpp">
       <Filter>소스 파일\04_Transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\transform.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\01_Triangle\01_Triangle.frag">
+    <None Include="src\01_Triangle\01_triangle.frag">
       <Filter>소스 파일\01_Triangle</Filter>
     </None>
-    <None Include="src\01_Triangle\01_Triangle.vert">
+    <None Include="src\01_Triangle\01_triangle.vert">
       <Filter>소스 파일\01_Triangle</Filter>
     </None>
-    <None Include="src\01_Triangle\01_Triangle_2.frag">
+    <None Include="src\01_Triangle\01_triangle_2.frag">
       <Filter>소스 파일\01_Triangle</Filter>
     </None>
-    <None Include="src\02_Shader\02_Shader.frag">
+    <None Include="src\02_Shader\02_shader.frag">
       <Filter>소스 파일\02_Shader</Filter>
     </None>
-    <None Include="src\02_Shader\02_Shader.vert">
+    <None Include="src\02_Shader\02_shader.vert">
       <Filter>소스 파일\02_Shader</Filter>
     </None>
-    <None Include="src\02_Shader\02_Shader_2.frag">
+    <None Include="src\02_Shader\02_shader_2.frag">
       <Filter>소스 파일\02_Shader</Filter>
     </None>
     <None Include="src\02_Shader\02_Shader_3.vert">
       <Filter>소스 파일\02_Shader</Filter>
     </None>
-    <None Include="src\02_Shader\02_Shader_3.frag">
+    <None Include="src\02_Shader\02_shader_3.frag">
       <Filter>소스 파일\02_Shader</Filter>
     </None>
-    <None Include="src\03_Texture\03_Texture.frag">
+    <None Include="src\03_Texture\03_texture.frag">
       <Filter>소스 파일\03_Texture</Filter>
     </None>
-    <None Include="src\03_Texture\03_Texture.vert">
+    <None Include="src\03_Texture\03_texture.vert">
       <Filter>소스 파일\03_Texture</Filter>
     </None>
-    <None Include="src\03_Texture\03_Texture_2.frag">
+    <None Include="src\03_Texture\03_texture_2.frag">
       <Filter>소스 파일\03_Texture</Filter>
     </None>
   </ItemGroup>
@@ -108,22 +111,25 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="includes\CustomShader.h">
+    <ClInclude Include="includes\shader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="includes\CustomShaderProgram.h">
+    <ClInclude Include="includes\shaderprogram.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="includes\GLSLFile.h">
+    <ClInclude Include="includes\glsl_file.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="includes\Polygon.h">
+    <ClInclude Include="includes\polygon.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="includes\Texture.h">
+    <ClInclude Include="includes\texture.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="opengl-study-bin\includes\stb_image.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\transform.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,34 +3,36 @@
 #include <string>
 #include <optional>
 
-class Texture {
-private:
-	std::string texName;
+namespace ids {
+	class Texture {
+	private:
+		std::string tex_name;
 
-	int width;
-	int height;
-	int channels;
+		int width;
+		int height;
+		int channels;
 
-	bool hasMipmap;
+		bool has_mipmap;
 
-	unsigned int textureObject;
+		unsigned int texture_object;
 
-	std::optional<int> targetIndex;
+		std::optional<int> target_index;
 
-public:
-	Texture() = default;
-	Texture(const std::string& fileName, bool mipmap = true);
+	public:
+		Texture() = default;
+		Texture(const std::string& file_name, bool mipmap = true);
 
-public:
-	void Load(const std::string& file = "", bool mipmap = true);
+	public:
+		void load(const std::string& file = "", bool mipmap = true);
 
-public:
-	void SetIndex(int index);
+	public:
+		void setIndex(int index);
 
-	void SetWrapOption(int sOption, int tOption);
+		void setWrapOption(int s_option, int t_0ption);
 
-	void SetMinifyFilter(int option);
-	void SetMagnifyFilter(int option);
+		void setMinifyFilter(int option);
+		void setMagnifyFilter(int option);
 
-	void Use();
-};
+		void use();
+	};
+}

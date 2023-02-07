@@ -2,48 +2,50 @@
 #include <vector>
 #include <memory>
 
-class CustomShaderProgram;
-class Texture;
-class Transform;
+namespace ids {
+	class ShaderProgram;
+	class Texture;
+	class Transform;
 
-class Polygon {
-private:
-	std::vector<float> vertices;
-	std::vector<int> indices;
+	class Polygon {
+	private:
+		std::vector<float> vertices;
+		std::vector<int> indices;
 
-	// Vertex Buffer Object / Vertex Array Object / Element array Buffer Object
-	unsigned int vao, vbo, ebo;
+		// Vertex Buffer Object / Vertex Array Object / Element array Buffer Object
+		unsigned int vao, vbo, ebo;
 
-	// Target shader program
-	std::shared_ptr<CustomShaderProgram> targetShaderProg;
+		// Target shader program
+		std::shared_ptr<ShaderProgram> target_shaderprog;
 
-	// Target texture
-	std::vector<std::shared_ptr<Texture>> targetTextures;
+		// Target texture
+		std::vector<std::shared_ptr<Texture>> target_textures;
 
-	bool shouldWireframe;
+		bool should_wireframe;
 
-private:
-	std::unique_ptr<Transform> transform;
+	private:
+		std::unique_ptr<Transform> transform;
 
-public:
-	Polygon();
-	~Polygon();
+	public:
+		Polygon();
+		~Polygon();
 
-public:
-	void SetVertices(const std::initializer_list<float>& verts);
-	void SetIndices(const std::initializer_list<int>& ind);
+	public:
+		void setVertices(const std::initializer_list<float>& verts);
+		void setIndices(const std::initializer_list<int>& ind);
 
-	void SetAttributes(int location, int count, unsigned int type, bool normalize, int size, void* offset);
+		void setAttributes(int location, int count, unsigned int type, bool normalize, int size, void* offset);
 
-	void SetWireframeMode(bool active);
+		void setWireframeMode(bool active);
 
-	void SetTargetShaderProg(const std::shared_ptr<CustomShaderProgram>& prog);
-	
-	int AddTargetTexture(const std::shared_ptr<Texture>& texture);
+		void setTargetShaderProg(const std::shared_ptr<ShaderProgram>& prog);
 
-public:
-	const std::unique_ptr<Transform>& GetTransform() const;
+		int addTargetTexture(const std::shared_ptr<Texture>& texture);
 
-public:
-	void Draw();
-};
+	public:
+		const std::unique_ptr<Transform>& getTransform() const;
+
+	public:
+		void draw();
+	};
+}
