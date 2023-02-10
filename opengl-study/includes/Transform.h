@@ -8,6 +8,9 @@ namespace ids {
 		glm::mat4 transform;
 
 	public:
+		static const glm::mat4 identity;
+
+	public:
 		void translate(float x, float y, float z);
 		void translate(const glm::vec3& v);
 
