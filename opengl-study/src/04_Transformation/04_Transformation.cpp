@@ -8,6 +8,7 @@
 #include "shaderprogram.h"
 #include "polygon.h"
 #include "texture.h"
+#include "transform.h"
 
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 600
@@ -120,6 +121,8 @@ int main() {
 	//tr2 = glm::scale(tr2, glm::vec3(0.5f, 1.0f, 0.5f));
 
 	shader_program->setMat4("transform", tr2);
+
+	ids::Transform transform;
 #pragma endregion
 
 
@@ -134,10 +137,10 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shader_program->setFloat("threshold", sin(glfwGetTime()) * 0.5f + 0.5f);
-		
-		glm::mat4 tr3 = glm::rotate(tr2, glm::radians(static_cast<float>(glfwGetTime()) * 360.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-		tr3 = glm::scale(tr3, glm::vec3(sin(glfwGetTime()) * 0.5f + 0.5f, cos(glfwGetTime()) * 0.5f + 0.5f, 1.0f));
-		shader_program->setMat4("transform", tr3);
+
+		transform.rotateTo(0.0f, 0.0f, static_cast<float>(glfwGetTime()) * 360.0f);
+		transform.scaleTo(glm::vec3(sin(glfwGetTime()) * 0.5f + 0.5f, cos(glfwGetTime()) * 0.5f + 0.5f, 1.0f));
+		shader_program->setMat4("transform", transform.getTransform());
 
 		box->draw();
 

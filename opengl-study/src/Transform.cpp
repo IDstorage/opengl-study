@@ -4,15 +4,29 @@ using namespace ids;
 
 const glm::mat4 Transform::identity = glm::mat4(1.0f);
 
-void Transform::translate(float x, float y, float z) {
-	transform = glm::translate(transform, glm::vec3(x, y, z));
+void Transform::translateTo(float x, float y, float z) {
+	position.x = x;
+	position.y = y;
+	position.z = z;
+	//transform = glm::translate(transform, glm::vec3(x, y, z));
 }
 
-void Transform::translate(const glm::vec3& v) {
-	transform = glm::translate(transform, v);
+void Transform::translateTo(const glm::vec3& v) {
+	position = v;
+	//transform = glm::translate(transform, v);
 }
 
-void Transform::rotate(float x, float y, float z) {
+void Transform::translateBy(float x, float y, float z) {
+	position.x += x;
+	position.y += y;
+	position.z += z;
+}
+
+void Transform::translateBy(const glm::vec3& v) {
+	position += v;
+}
+
+void Transform::rotateTo(float x, float y, float z) {
 	/*float radx = glm::radians(x), rady = glm::radians(y), radz = glm::radians(z);
 	float cosx = glm::cos(radx), sinx = glm::sin(radx);
 	float cosy = glm::cos(rady), siny = glm::sin(rady);
@@ -24,19 +38,72 @@ void Transform::rotate(float x, float y, float z) {
 
 	transform = rot * transform;*/
 
-	transform = glm::rotate(transform, glm::radians(y), glm::vec3(0.0f, 1.0f, 0.0f));
-	transform = glm::rotate(transform, glm::radians(z), glm::vec3(0.0f, 0.0f, 1.0f));
-	transform = glm::rotate(transform, glm::radians(x), glm::vec3(1.0f, 0.0f, 0.0f));
+	//transform = glm::rotate(transform, glm::radians(y), glm::vec3(0.0f, 1.0f, 0.0f));
+	//transform = glm::rotate(transform, glm::radians(z), glm::vec3(0.0f, 0.0f, 1.0f));
+	//transform = glm::rotate(transform, glm::radians(x), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	euler_angles.x = x;
+	euler_angles.y = y;
+	euler_angles.z = z;
 }
 
-void Transform::rotate(const glm::vec3& v) {
-	rotate(v.x, v.y, v.z);
+void Transform::rotateTo(const glm::vec3& v) {
+	euler_angles = v;
 }
 
-void Transform::scale(float x, float y, float z) {
-	transform = glm::scale(transform, glm::vec3(x, y, z));
+void Transform::rotateBy(float x, float y, float z) {
+	euler_angles.x += x;
+	euler_angles.y += y;
+	euler_angles.z += z;
 }
 
-void Transform::scale(const glm::vec3& v) {
-	transform = glm::scale(transform, v);
+void Transform::rotateBy(const glm::vec3& v) {
+	euler_angles += v;
+}
+
+void Transform::scaleTo(float x, float y, float z) {
+	local_scale.x = x;
+	local_scale.y = y;
+	local_scale.z = z;
+	//transform = glm::scale(transform, glm::vec3(x, y, z));
+}
+
+void Transform::scaleTo(const glm::vec3& v) {
+	local_scale = v;
+	//transform = glm::scale(transform, v);
+}
+
+void Transform::scaleBy(float x, float y, float z) {
+	local_scale.x += x;
+	local_scale.y += y;
+	local_scale.z += z;
+}
+
+void Transform::scaleBy(const glm::vec3& v) {
+	local_scale += v;
+}
+
+
+glm::vec3 Transform::getPosition() const {
+	return position;
+}
+
+glm::vec3 Transform::getEulerAngles() const {
+	return euler_angles;
+}
+
+glm::vec3 Transform::getLocalScale() const {
+	return local_scale;
+}
+
+glm::mat4 Transform::getTransform() const {
+	glm::mat4 scale = glm::scale(identity, local_scale);
+
+	glm::mat4 roty = glm::rotate(identity, glm::radians(euler_angles.y), glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 rotz = glm::rotate(identity, glm::radians(euler_angles.z), glm::vec3(0.0f, 0.0f, 1.0f));
+	glm::mat4 rotx = glm::rotate(identity, glm::radians(euler_angles.x), glm::vec3(1.0f, 0.0f, 0.0f));
+
+	glm::mat4 tr = glm::translate(identity, position);
+
+	return tr * rotx * rotz * roty * scale;
 }
