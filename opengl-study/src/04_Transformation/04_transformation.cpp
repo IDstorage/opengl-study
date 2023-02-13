@@ -16,6 +16,10 @@
 void OnResizeCallback(GLFWwindow*, int, int);
 void ProcessInput(GLFWwindow*);
 
+ids::Transform mainTransform;
+
+double deltaTime = 0.0;
+
 int main() {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -130,7 +134,10 @@ int main() {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	double currentTime = glfwGetTime();
 	while (!glfwWindowShouldClose(window)) {
+		deltaTime = glfwGetTime() - currentTime;
+		currentTime = glfwGetTime();
 		ProcessInput(window);
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -141,6 +148,8 @@ int main() {
 		transform.rotateTo(0.0f, 0.0f, static_cast<float>(glfwGetTime()) * 360.0f);
 		transform.scaleTo(glm::vec3(sin(glfwGetTime()) * 0.5f + 0.5f, cos(glfwGetTime()) * 0.5f + 0.5f, 1.0f));
 		shader_program->setMat4("transform", transform.getTransform());
+
+		shader_program->setMat4("transform", mainTransform.getTransform());
 
 		box->draw();
 
@@ -167,5 +176,23 @@ void OnResizeCallback(GLFWwindow* window, int width, int height) {
 void ProcessInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
+	}
+
+	// Rotate left
+	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+		mainTransform.rotateBy(0.0f, 0.0f, 360.0f * deltaTime);
+	}
+	// Rotate right
+	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+		mainTransform.rotateBy(0.0f, 0.0f, -360.0f * deltaTime);
+	}
+
+	// Zoom-in
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		mainTransform.scaleBy(glm::vec3(1.0f, 1.0f, 1.0f) * static_cast<float>(1.0 * deltaTime));
+	}
+	// Zoom-out
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		mainTransform.scaleBy(glm::vec3(1.0f, 1.0f, 1.0f) * static_cast<float>(-1.0 * deltaTime));
 	}
 }
