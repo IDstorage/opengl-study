@@ -10,7 +10,7 @@
 
 void onResizeCallback(GLFWwindow*, int, int);
 void processInput(GLFWwindow*);
-void showTriangleOptionEditor(GLFWwindow*, const std::string&, bool&);
+void showTriangleOptionEditor(bool&, bool&);
 
 int main() {
 	glfwInit();
@@ -120,8 +120,7 @@ int main() {
 
 		ids::EditorGUI::startNewFrame();
 
-		showTriangleOptionEditor(window, "Left triangle", left_triangle_wf);
-		showTriangleOptionEditor(window, "Right triangle", right_triangle_wf);
+		showTriangleOptionEditor(left_triangle_wf, right_triangle_wf);
 
 		ids::EditorGUI::render();
 
@@ -151,16 +150,19 @@ void processInput(GLFWwindow* window) {
 	}
 }
 
-void showTriangleOptionEditor(GLFWwindow* window, const std::string& title, bool& is_wf) {
-	int display_w, display_h;
-	glfwGetFramebufferSize(window, &display_w, &display_h);
-	
-	float width = 200.0f;
+void showTriangleOptionEditor(bool& left, bool& right) {
+	ImGui::Begin("Setting", (bool*)false, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
 
-	ImGui::Begin(title.c_str(), (bool*)false, ImGuiWindowFlags_NoResize);
-	ImGui::SetWindowSize(ImVec2(width, 55.0f));
+	ImGui::SetWindowSize(ImVec2(300.0f, 125.0f));
+	ImGui::SetWindowPos(ImVec2(0.0f, 0.0f));
 
-	ImGui::Checkbox("Active wire-frame mode", &is_wf);
+	if (ImGui::CollapsingHeader("Left Triangle", ImGuiTreeNodeFlags_DefaultOpen)) {
+		ImGui::Checkbox("Active wire-frame mode##left", &left);
+	}
+
+	if (ImGui::CollapsingHeader("Right Triangle", ImGuiTreeNodeFlags_DefaultOpen)) {
+		ImGui::Checkbox("Active wire-frame mode##right", &right);
+	}
 
 	ImGui::End();
 }
