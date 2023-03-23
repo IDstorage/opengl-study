@@ -19,9 +19,9 @@
 
 #include "editorgui.h"
 
-void OnResizeCallback(GLFWwindow*, int, int);
-void ProcessInput(GLFWwindow*);
-void ShowBackgroundColorEditor(ImVec4*);
+void onResizeCallback(GLFWwindow*, int, int);
+void processInput(GLFWwindow*);
+void showBackgroundColorEditor(ImVec4*);
 
 int main() {
 	// GLFW 초기화
@@ -64,7 +64,7 @@ int main() {
 
 	glViewport(0, 0, 800, 600);
 	// 창 사이즈 변경 콜백
-	glfwSetFramebufferSizeCallback(window, OnResizeCallback);
+	glfwSetFramebufferSizeCallback(window, onResizeCallback);
 
 	ImVec4 bg_color(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -73,7 +73,7 @@ int main() {
 	// 메인 루프
 	while (!glfwWindowShouldClose(window)) { // 종료해야 하는지 확인
 		// 입력 처리
-		ProcessInput(window);
+		processInput(window);
 		
 		// 렌더링 처리
 
@@ -91,7 +91,7 @@ int main() {
 
 		ids::EditorGUI::startNewFrame();
 
-		ShowBackgroundColorEditor(&bg_color);
+		showBackgroundColorEditor(&bg_color);
 
 		ids::EditorGUI::render();
 
@@ -107,11 +107,11 @@ int main() {
 }
 
 // 창 사이즈가 변경되면 호출
-void OnResizeCallback(GLFWwindow* window, int width, int height) {
+void onResizeCallback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
-void ProcessInput(GLFWwindow* window) {
+void processInput(GLFWwindow* window) {
 	// 키 입력 (DirectX랑 비슷한듯?)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		// 윈도우 종료 플래그 설정 (이 bool값은 메인 루프의 glfwWindowShouldClose(...)로 확인 가능) 
@@ -119,7 +119,7 @@ void ProcessInput(GLFWwindow* window) {
 	}
 }
 
-void ShowBackgroundColorEditor(ImVec4* bg_color) {
+void showBackgroundColorEditor(ImVec4* bg_color) {
 	ImGui::Begin("Color editor", (bool*)false, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
 	ImGui::SetWindowSize(ImVec2(400.0f, 65.0f));
 	ImGui::SetWindowPos(ImVec2(0.0f, 0.0f));

@@ -13,8 +13,8 @@
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 600
 
-void OnResizeCallback(GLFWwindow*, int, int);
-void ProcessInput(GLFWwindow*);
+void onResizeCallback(GLFWwindow*, int, int);
+void processInput(GLFWwindow*);
 
 ids::Transform mainTransform;
 
@@ -40,7 +40,7 @@ int main() {
 	}
 
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	glfwSetFramebufferSizeCallback(window, OnResizeCallback);
+	glfwSetFramebufferSizeCallback(window, onResizeCallback);
 
 #pragma region Shader Compile/Link
 	auto shader_program = std::make_shared<ids::ShaderProgram>();
@@ -138,7 +138,7 @@ int main() {
 	while (!glfwWindowShouldClose(window)) {
 		deltaTime = glfwGetTime() - currentTime;
 		currentTime = glfwGetTime();
-		ProcessInput(window);
+		processInput(window);
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -169,11 +169,11 @@ int main() {
 	return 0;
 }
 
-void OnResizeCallback(GLFWwindow* window, int width, int height) {
+void onResizeCallback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
-void ProcessInput(GLFWwindow* window) {
+void processInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
