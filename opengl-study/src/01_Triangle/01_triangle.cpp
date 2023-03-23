@@ -6,10 +6,11 @@
 #include "shaderprogram.h"
 #include "polygon.h"
 
+#include "editorgui.h"
+
 void onResizeCallback(GLFWwindow*, int, int);
 void processInput(GLFWwindow*);
-
-bool is_wfkey_pressed = false;
+void showTriangleOptionEditor(GLFWwindow*, const std::string&, bool&);
 
 int main() {
 	glfwInit();
@@ -32,6 +33,8 @@ int main() {
 
 	glViewport(0, 0, 800, 600);
 	glfwSetFramebufferSizeCallback(window, onResizeCallback);
+
+	ids::EditorGUI::initialize(window, "#version 130");
 
 #pragma region Shader Compile/Link
 	auto shader_program = std::make_shared<ids::ShaderProgram>();
@@ -81,6 +84,7 @@ int main() {
 		//0, 1, 2		// Counter-Clockwise
 		0, 2, 1	// Clockwise
 	});
+	left_triangle->setAttributes(0, 3, GL_FLOAT, false, 3 * sizeof(float), NULL);
 	left_triangle->setTargetShaderProg(shader_program);
 
 	auto right_triangle = std::make_unique<ids::Polygon>();
@@ -93,8 +97,11 @@ int main() {
 		0, 1, 2		// Counter-Clockwise
 		//0, 2, 1	// Clockwise
 	});
+	right_triangle->setAttributes(0, 3, GL_FLOAT, false, 3 * sizeof(float), NULL);
 	right_triangle->setWireframeMode(true);
 	right_triangle->setTargetShaderProg(shader_program2);
+
+	bool left_triangle_wf = false, right_triangle_wf = true;
 
 #pragma region Rendering Loop
 	while (!glfwWindowShouldClose(window)) {
@@ -103,16 +110,26 @@ int main() {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		left_triangle->setWireframeMode(is_wfkey_pressed);
+		left_triangle->setWireframeMode(left_triangle_wf);
 		left_triangle->draw();
 
-		right_triangle->setWireframeMode(!is_wfkey_pressed);
+		right_triangle->setWireframeMode(right_triangle_wf);
 		right_triangle->draw();
 
 		glfwPollEvents();
+
+		ids::EditorGUI::startNewFrame();
+
+		showTriangleOptionEditor(window, "Left triangle", left_triangle_wf);
+		showTriangleOptionEditor(window, "Right triangle", right_triangle_wf);
+
+		ids::EditorGUI::render();
+
 		glfwSwapBuffers(window);
 	}
 #pragma endregion
+
+	ids::EditorGUI::release();
 
 	shader_program.reset();
 	shader_program2.reset();
@@ -132,6 +149,18 @@ void processInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
+}
 
-	is_wfkey_pressed = glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS;
+void showTriangleOptionEditor(GLFWwindow* window, const std::string& title, bool& is_wf) {
+	int display_w, display_h;
+	glfwGetFramebufferSize(window, &display_w, &display_h);
+	
+	float width = 200.0f;
+
+	ImGui::Begin(title.c_str(), (bool*)false, ImGuiWindowFlags_NoResize);
+	ImGui::SetWindowSize(ImVec2(width, 55.0f));
+
+	ImGui::Checkbox("Active wire-frame mode", &is_wf);
+
+	ImGui::End();
 }
