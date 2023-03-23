@@ -28,6 +28,12 @@
     <Filter Include="소스 파일\04_Transformation">
       <UniqueIdentifier>{9ceeb64d-f59b-40a8-96ee-136e3f22163a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\ImGui">
+      <UniqueIdentifier>{f016bb67-6116-4168-b7e2-fb5b0979047a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ImGui">
+      <UniqueIdentifier>{6982a175-fb61-4e73-ba5c-420656955ee8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="opengl-study-bin\src\glad.c">
@@ -67,6 +73,30 @@
       <Filter>소스 파일\04_Transformation</Filter>
     </ClCompile>
     <ClCompile Include="src\transform.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-study-bin\src\ImGui\imgui.cpp">
+      <Filter>소스 파일\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-study-bin\src\ImGui\imgui_demo.cpp">
+      <Filter>소스 파일\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-study-bin\src\ImGui\imgui_draw.cpp">
+      <Filter>소스 파일\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-study-bin\src\ImGui\imgui_impl_glfw.cpp">
+      <Filter>소스 파일\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-study-bin\src\ImGui\imgui_impl_opengl3.cpp">
+      <Filter>소스 파일\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-study-bin\src\ImGui\imgui_tables.cpp">
+      <Filter>소스 파일\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl-study-bin\src\ImGui\imgui_widgets.cpp">
+      <Filter>소스 파일\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editorgui.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,6 +170,36 @@
     </ClInclude>
     <ClInclude Include="includes\glm_required.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imconfig.h">
+      <Filter>헤더 파일\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imgui.h">
+      <Filter>헤더 파일\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imgui_impl_glfw.h">
+      <Filter>헤더 파일\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imgui_impl_opengl3.h">
+      <Filter>헤더 파일\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imgui_impl_opengl3_loader.h">
+      <Filter>헤더 파일\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imgui_internal.h">
+      <Filter>헤더 파일\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\editorgui.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imstb_rectpack.h">
+      <Filter>헤더 파일\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imstb_textedit.h">
+      <Filter>헤더 파일\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imstb_truetype.h">
+      <Filter>헤더 파일\ImGui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

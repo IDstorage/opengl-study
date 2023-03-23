@@ -17,8 +17,11 @@
 #include <random>
 #include <functional>
 
+#include "editorgui.h"
+
 void OnResizeCallback(GLFWwindow*, int, int);
 void ProcessInput(GLFWwindow*);
+void ShowBackgroundColorEditor(ImVec4*);
 
 int main() {
 	// GLFW 초기화
@@ -63,12 +66,9 @@ int main() {
 	// 창 사이즈 변경 콜백
 	glfwSetFramebufferSizeCallback(window, OnResizeCallback);
 
-	std::mt19937 random_engine{ static_cast<unsigned int>(time(0)) };
-	std::uniform_real_distribution<> distribution(0.0, 1.0);
+	ImVec4 bg_color(0.0f, 0.0f, 0.0f, 1.0f);
 
-	double r = distribution(random_engine);
-	double g = distribution(random_engine);
-	double b = distribution(random_engine);
+	ids::EditorGUI::initialize(window, "#version 130");
 
 	// 메인 루프
 	while (!glfwWindowShouldClose(window)) { // 종료해야 하는지 확인
@@ -79,7 +79,7 @@ int main() {
 
 		// glClear로 초기화할 버퍼 중 컬러 버퍼를 어떤 색으로 초기화할지 결정
 		// 색상만 정해서 glClear가 호출되기 전엔 아무 일도 일어나지 않는다.
-		glClearColor(r, g, b, 1.0f);
+		glClearColor(bg_color.x, bg_color.y, bg_color.z, bg_color.w);
 		// glClearXXX로 설정한 값으로 버퍼를 비운다. (정확히는 덮어씌운다)
 		// GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT(깊이 버퍼), GL_STENCIL_BUFFER_BIT(스텐실 버퍼)가 있다.
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -88,9 +88,18 @@ int main() {
 
 		// 이벤트(키보드 입력이나 마우스 이동 등)가 발생했는지 확인 후 등록된 콜백 함수들을 호출
 		glfwPollEvents();
+
+		ids::EditorGUI::startNewFrame();
+
+		ShowBackgroundColorEditor(&bg_color);
+
+		ids::EditorGUI::render();
+
 		// 컬러 버퍼 교체 (더블버퍼링)
 		glfwSwapBuffers(window);
 	}
+
+	ids::EditorGUI::release();
 
 	// 모든 리소스 해제
 	glfwTerminate();
@@ -108,4 +117,14 @@ void ProcessInput(GLFWwindow* window) {
 		// 윈도우 종료 플래그 설정 (이 bool값은 메인 루프의 glfwWindowShouldClose(...)로 확인 가능) 
 		glfwSetWindowShouldClose(window, true);
 	}
+}
+
+void ShowBackgroundColorEditor(ImVec4* bg_color) {
+	ImGui::Begin("Color editor", (bool*)false, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+	ImGui::SetWindowSize(ImVec2(400.0f, 65.0f));
+	ImGui::SetWindowPos(ImVec2(0.0f, 0.0f));
+
+	ImGui::ColorEdit3("Background Color", reinterpret_cast<float*>(bg_color));
+
+	ImGui::End();
 }

@@ -152,9 +152,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="opengl-study-bin\src\glad.c" />
+    <ClCompile Include="opengl-study-bin\src\ImGui\imgui.cpp" />
+    <ClCompile Include="opengl-study-bin\src\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="opengl-study-bin\src\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="opengl-study-bin\src\ImGui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="opengl-study-bin\src\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="opengl-study-bin\src\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="opengl-study-bin\src\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="opengl-study-bin\src\stb_image.cpp" />
     <ClCompile Include="src\00_Window\00_window.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\01_Triangle\01_triangle.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -167,7 +174,10 @@
     <ClCompile Include="src\03_Texture\03_texture.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="src\04_Transformation\04_transformation.cpp" />
+    <ClCompile Include="src\04_Transformation\04_transformation.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\editorgui.cpp" />
     <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\shaderprogram.cpp" />
     <ClCompile Include="src\glsl_file.cpp" />
@@ -194,6 +204,7 @@
     <Text Include="src\02_Shader\glsl_format.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="includes\editorgui.h" />
     <ClInclude Include="includes\glm_required.h" />
     <ClInclude Include="includes\shader.h" />
     <ClInclude Include="includes\shaderprogram.h" />
@@ -201,6 +212,15 @@
     <ClInclude Include="includes\polygon.h" />
     <ClInclude Include="includes\texture.h" />
     <ClInclude Include="includes\transform.h" />
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imconfig.h" />
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imgui.h" />
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imgui_impl_glfw.h" />
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imgui_internal.h" />
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imstb_textedit.h" />
+    <ClInclude Include="opengl-study-bin\includes\ImGui\imstb_truetype.h" />
     <ClInclude Include="opengl-study-bin\includes\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
