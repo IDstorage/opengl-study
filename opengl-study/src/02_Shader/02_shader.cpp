@@ -6,8 +6,11 @@
 #include "shaderprogram.h"
 #include "polygon.h"
 
+#include "editorgui.h"
+
 void onResizeCallback(GLFWwindow*, int, int);
 void processInput(GLFWwindow*);
+void showTriangleColorEditor(ImVec4*, ImVec4*, ImVec4*);
 
 int main() {
 	glfwInit();
@@ -30,6 +33,8 @@ int main() {
 
 	glViewport(0, 0, 800, 600);
 	glfwSetFramebufferSizeCallback(window, onResizeCallback);
+
+	ids::EditorGUI::initialize(window, true);
 
 #pragma region Shader Compile/Link
 	auto shader_program = std::make_shared<ids::ShaderProgram>();
@@ -83,6 +88,7 @@ int main() {
 	triangle->setTargetShaderProg(shader_program);
 #pragma endregion
 
+	ImVec4 top_color(1.0f, 0.0f, 0.0f, 1.0f), left_color(0.0f, 1.0f, 0.0f, 1.0f), right_color(0.0f, 0.0f, 1.0f, 1.0f);
 	
 #pragma region Rendering Loop
 	while (!glfwWindowShouldClose(window)) {
@@ -94,12 +100,27 @@ int main() {
 		// glfwGetTime()으로 현재 시간(sec) 받아옴
 		//shader_program->setVec4("customColor", 0.0f, sin(glfwGetTime()) * 0.5f + 0.5f, 0.0f, 1.0f);
 
+		triangle->setVertices({
+			0.0f, 0.5f, 0.0f, top_color.x, top_color.y, top_color.z,
+			0.5f, -0.5f, 0.0f, right_color.x, right_color.y, right_color.z,
+			-0.5f, -0.5f, 0.0f, left_color.x, left_color.y, left_color.z
+		});
+
 		triangle->draw();
 
 		glfwPollEvents();
+
+		ids::EditorGUI::startNewFrame();
+
+		showTriangleColorEditor(&top_color, &left_color, &right_color);
+
+		ids::EditorGUI::render();
+
 		glfwSwapBuffers(window);
 	}
 #pragma endregion
+
+	ids::EditorGUI::release();
 
 	shader_program.reset();
 	triangle.reset();
@@ -116,4 +137,16 @@ void processInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
+}
+
+void showTriangleColorEditor(ImVec4* top_color, ImVec4* left_color, ImVec4* right_color) {
+	ImGui::Begin("Color settings", (bool*)false, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+	ImGui::SetWindowSize(ImVec2(350.0f, 100.0f));
+	ImGui::SetWindowPos(ImVec2(0.0f, 0.0f));
+
+	ImGui::ColorEdit3("Top color", reinterpret_cast<float*>(top_color));
+	ImGui::ColorEdit3("Left color", reinterpret_cast<float*>(left_color));
+	ImGui::ColorEdit3("Right color", reinterpret_cast<float*>(right_color));
+
+	ImGui::End();
 }

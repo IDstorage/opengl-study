@@ -11,7 +11,7 @@ class GLFWwindow;
 namespace ids {
 	class EditorGUI {
 	public:
-		static void initialize(GLFWwindow* window, bool docking, const std::string& version = "#version 130");
+		static void initialize(GLFWwindow* window, bool docking = true, const std::string& version = "#version 130");
 
 		static void startNewFrame();
 		static void render();

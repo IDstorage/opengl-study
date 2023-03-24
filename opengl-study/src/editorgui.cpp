@@ -6,7 +6,7 @@
 
 using namespace ids;
 
-void EditorGUI::initialize(GLFWwindow* window, bool docking = false, const std::string& version) {
+void EditorGUI::initialize(GLFWwindow* window, bool docking, const std::string& version) {
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
