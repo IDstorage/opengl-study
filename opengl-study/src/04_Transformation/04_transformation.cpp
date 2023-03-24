@@ -10,13 +10,15 @@
 #include "texture.h"
 #include "transform.h"
 
+#include "editorgui.h"
+
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 600
 
 void onResizeCallback(GLFWwindow*, int, int);
 void processInput(GLFWwindow*);
-
-ids::Transform mainTransform;
+void showThresholdEditor(float*);
+void showTransformEditor(ids::Transform*);
 
 double deltaTime = 0.0;
 
@@ -41,6 +43,8 @@ int main() {
 
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	glfwSetFramebufferSizeCallback(window, onResizeCallback);
+
+	ids::EditorGUI::initialize(window);
 
 #pragma region Shader Compile/Link
 	auto shader_program = std::make_shared<ids::ShaderProgram>();
@@ -125,10 +129,10 @@ int main() {
 	//tr2 = glm::scale(tr2, glm::vec3(0.5f, 1.0f, 0.5f));
 
 	shader_program->setMat4("transform", tr2);
-
-	ids::Transform transform;
 #pragma endregion
 
+	ids::Transform transform;
+	float threshold = 0.0f;
 
 #pragma region Rendering Loop
 	glEnable(GL_BLEND);
@@ -143,20 +147,26 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		shader_program->setFloat("threshold", sin(glfwGetTime()) * 0.5f + 0.5f);
+		shader_program->setFloat("threshold", threshold);
 
-		transform.rotateTo(0.0f, 0.0f, static_cast<float>(glfwGetTime()) * 360.0f);
-		transform.scaleTo(glm::vec3(sin(glfwGetTime()) * 0.5f + 0.5f, cos(glfwGetTime()) * 0.5f + 0.5f, 1.0f));
 		shader_program->setMat4("transform", transform.getTransform());
-
-		shader_program->setMat4("transform", mainTransform.getTransform());
 
 		box->draw();
 
 		glfwPollEvents();
+
+		ids::EditorGUI::startNewFrame();
+
+		showTransformEditor(&transform);
+		showThresholdEditor(&threshold);
+
+		ids::EditorGUI::render();
+
 		glfwSwapBuffers(window);
 	}
 #pragma endregion
+
+	ids::EditorGUI::release();
 
 	glDisable(GL_BLEND);
 
@@ -178,21 +188,47 @@ void processInput(GLFWwindow* window) {
 		glfwSetWindowShouldClose(window, true);
 	}
 
-	// Rotate left
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-		mainTransform.rotateBy(0.0f, 0.0f, 360.0f * deltaTime);
-	}
-	// Rotate right
-	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
-		mainTransform.rotateBy(0.0f, 0.0f, -360.0f * deltaTime);
-	}
+	//// Rotate left
+	//if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+	//	mainTransform.rotateBy(0.0f, 0.0f, 360.0f * deltaTime);
+	//}
+	//// Rotate right
+	//if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+	//	mainTransform.rotateBy(0.0f, 0.0f, -360.0f * deltaTime);
+	//}
 
-	// Zoom-in
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		mainTransform.scaleBy(glm::vec3(1.0f, 1.0f, 1.0f) * static_cast<float>(1.0 * deltaTime));
-	}
-	// Zoom-out
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		mainTransform.scaleBy(glm::vec3(1.0f, 1.0f, 1.0f) * static_cast<float>(-1.0 * deltaTime));
-	}
+	//// Zoom-in
+	//if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+	//	mainTransform.scaleBy(glm::vec3(1.0f, 1.0f, 1.0f) * static_cast<float>(1.0 * deltaTime));
+	//}
+	//// Zoom-out
+	//if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+	//	mainTransform.scaleBy(glm::vec3(1.0f, 1.0f, 1.0f) * static_cast<float>(-1.0 * deltaTime));
+	//}
+}
+
+void showThresholdEditor(float* threshold) {
+	ImGui::Begin("Threshold");
+
+	ImGui::SliderFloat("Threshold", threshold, 0.0f, 1.0f, "%.2f");
+
+	ImGui::End();
+}
+
+void showTransformEditor(ids::Transform* transform) {
+	ImGui::Begin("Transform");
+
+	auto pos = transform->getPosition(),
+		 rot = transform->getEulerAngles(),
+		 scale = transform->getLocalScale();
+
+	ImGui::DragFloat3("Position", glm::value_ptr(pos));
+	ImGui::DragFloat3("Rotation", glm::value_ptr(rot));
+	ImGui::DragFloat3("Scale", glm::value_ptr(scale));
+
+	transform->translateTo(pos);
+	transform->rotateTo(rot);
+	transform->scaleTo(scale);
+
+	ImGui::End();
 }

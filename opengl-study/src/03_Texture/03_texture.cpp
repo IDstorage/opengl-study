@@ -7,11 +7,14 @@
 #include "polygon.h"
 #include "texture.h"
 
+#include "editorgui.h"
+
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 600
 
 void onResizeCallback(GLFWwindow*, int, int);
 void processInput(GLFWwindow*);
+void showThresholdEditor(float*);
 
 int main() {
 	glfwInit();
@@ -34,6 +37,8 @@ int main() {
 
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	glfwSetFramebufferSizeCallback(window, onResizeCallback);
+
+	ids::EditorGUI::initialize(window);
 
 #pragma region Shader Compile/Link
 	auto shader_program = std::make_shared<ids::ShaderProgram>();
@@ -137,20 +142,32 @@ int main() {
 	 */
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	float threshold = 0.0f;
+
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		shader_program->setFloat("threshold", sin(glfwGetTime()) * 0.5f + 0.5f);
+		//shader_program->setFloat("threshold", sin(glfwGetTime()) * 0.5f + 0.5f);
+		shader_program->setFloat("threshold", threshold);
 
 		box->draw();
 
 		glfwPollEvents();
+
+		ids::EditorGUI::startNewFrame();
+
+		showThresholdEditor(&threshold);
+
+		ids::EditorGUI::render();
+
 		glfwSwapBuffers(window);
 	}
 #pragma endregion
+
+	ids::EditorGUI::release();
 
 	// TODO: 특정 셰이더에 대해 glEnable/glDisable을 관리할 수 있도록 해야 한다.
 	glDisable(GL_BLEND);
@@ -172,4 +189,12 @@ void processInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
+}
+
+void showThresholdEditor(float* threshold) {
+	ImGui::Begin("Threshold");
+
+	ImGui::SliderFloat("Threshold", threshold, 0.0f, 1.0f, "%.2f");
+
+	ImGui::End();
 }
