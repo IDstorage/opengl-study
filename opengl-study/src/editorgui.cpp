@@ -6,7 +6,7 @@
 
 using namespace ids;
 
-void EditorGUI::initialize(GLFWwindow* window, const std::string& version = "#version 130") {
+void EditorGUI::initialize(GLFWwindow* window, bool docking = false, const std::string& version) {
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -21,6 +21,10 @@ void EditorGUI::initialize(GLFWwindow* window, const std::string& version = "#ve
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(version.c_str());
+
+    if (docking) {
+        ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    }
 }
 
 

@@ -34,7 +34,7 @@ int main() {
 	glViewport(0, 0, 800, 600);
 	glfwSetFramebufferSizeCallback(window, onResizeCallback);
 
-	ids::EditorGUI::initialize(window, "#version 130");
+	ids::EditorGUI::initialize(window, true);
 
 #pragma region Shader Compile/Link
 	auto shader_program = std::make_shared<ids::ShaderProgram>();
