@@ -11,6 +11,7 @@
 void onResizeCallback(GLFWwindow*, int, int);
 void processInput(GLFWwindow*);
 void showTriangleColorEditor(ImVec4*, ImVec4*, ImVec4*);
+void showBackgroundColorEditor(ImVec4*);
 
 int main() {
 	glfwInit();
@@ -88,13 +89,16 @@ int main() {
 	triangle->setTargetShaderProg(shader_program);
 #pragma endregion
 
-	ImVec4 top_color(1.0f, 0.0f, 0.0f, 1.0f), left_color(0.0f, 1.0f, 0.0f, 1.0f), right_color(0.0f, 0.0f, 1.0f, 1.0f);
+	ImVec4 top_color(1.0f, 0.0f, 0.0f, 1.0f),
+		   left_color(0.0f, 1.0f, 0.0f, 1.0f),
+		   right_color(0.0f, 0.0f, 1.0f, 1.0f),
+		   bg_color(0.0f, 0.0f, 0.0f, 1.0f);
 	
 #pragma region Rendering Loop
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
 
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClearColor(bg_color.x, bg_color.y, bg_color.z, bg_color.w);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// glfwGetTime()으로 현재 시간(sec) 받아옴
@@ -113,6 +117,7 @@ int main() {
 		ids::EditorGUI::startNewFrame();
 
 		showTriangleColorEditor(&top_color, &left_color, &right_color);
+		showBackgroundColorEditor(&bg_color);
 
 		ids::EditorGUI::render();
 
@@ -140,13 +145,21 @@ void processInput(GLFWwindow* window) {
 }
 
 void showTriangleColorEditor(ImVec4* top_color, ImVec4* left_color, ImVec4* right_color) {
-	ImGui::Begin("Color settings", (bool*)false, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+	ImGui::Begin("Triangle Color", (bool*)false, ImGuiWindowFlags_NoResize);
 	ImGui::SetWindowSize(ImVec2(350.0f, 100.0f));
-	ImGui::SetWindowPos(ImVec2(0.0f, 0.0f));
 
 	ImGui::ColorEdit3("Top color", reinterpret_cast<float*>(top_color));
 	ImGui::ColorEdit3("Left color", reinterpret_cast<float*>(left_color));
 	ImGui::ColorEdit3("Right color", reinterpret_cast<float*>(right_color));
+
+	ImGui::End();
+}
+
+void showBackgroundColorEditor(ImVec4* bg_color) {
+	ImGui::Begin("Background Color", (bool*)false, ImGuiWindowFlags_NoResize);
+	ImGui::SetWindowSize(ImVec2(350.0f, 55.0f));
+
+	ImGui::ColorEdit3("Background", reinterpret_cast<float*>(bg_color));
 
 	ImGui::End();
 }
